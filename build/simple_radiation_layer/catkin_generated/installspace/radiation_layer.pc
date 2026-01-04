@@ -1,0 +1,8 @@
+prefix=/home/david/radtest_ws/install
+
+Name: radiation_layer
+Description: Description of radiation_layer
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: 

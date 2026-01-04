@@ -1,0 +1,10 @@
+\subsubsection parameters ROS parameters
+
+Reads and maintains the following parameters on the ROS server
+
+- \b "~enabled" : \b [bool] Whether to apply this plugin or not min: False, default: True, max: True
+- \b "~lower_threshold" : \b [double] Lower threshold value - please set scale min: -999.0, default: 1.0, max: 999.0
+- \b "~lower_threshold_scale" : \b [int] Scaling prefix for lower threshold min: -9, default: 0, max: 9
+- \b "~upper_threshold" : \b [double] Upper threshold value - please set scale min: -999.0, default: 200.0, max: 999.0
+- \b "~upper_threshold_scale" : \b [int] Scaling prefix for upper threshold min: -9, default: 0, max: 9
+

@@ -1,0 +1,11 @@
+\subsubsection usage Usage
+\verbatim
+<node name="radiation_layer" pkg="radiation_layer" type="radiation_layer">
+  <param name="enabled" type="bool" value="True" />
+  <param name="lower_threshold" type="double" value="1.0" />
+  <param name="lower_threshold_scale" type="int" value="0" />
+  <param name="upper_threshold" type="double" value="200.0" />
+  <param name="upper_threshold_scale" type="int" value="0" />
+</node>
+\endverbatim
+

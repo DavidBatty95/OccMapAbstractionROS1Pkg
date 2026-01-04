@@ -1,0 +1,194 @@
+<launch>
+
+  <!-- ====================================================== -->
+  <!-- GLOBAL FRAMES / MODE                                   -->
+  <!-- ====================================================== -->
+  <arg name="map_frame"  default="map"/>
+  <arg name="base_frame" default="base_link"/>
+  <arg name="odom_frame" default="odom"/>
+
+  <!-- ====================================================== -->
+  <!-- MASTER SWITCH: RADIATION AWARENESS                     -->
+  <!-- ====================================================== -->
+  <arg name="use_radiation" default="false"/>
+
+  <!-- ====================================================== -->
+  <!-- POSE SOURCE                                            -->
+  <!-- ====================================================== -->
+  <arg name="pose_source" default="odom"/>
+  <arg name="amcl_topic"  default="/amcl_pose"/>
+  <arg name="odom_topic"  default="/odometry/filtered"/>
+
+  <!-- ====================================================== -->
+  <!-- MOVE_BASE BEHAVIOUR (FLUID, LOW-HESITATION)            -->
+  <!-- ====================================================== -->
+  <param name="/move_base/controller_frequency" value="15.0"/>
+  <param name="/move_base/planner_frequency" value="0.0"/>
+
+  <param name="/move_base/controller_patience" value="8.0"/>
+  <param name="/move_base/oscillation_timeout" value="10.0"/>
+  <param name="/move_base/oscillation_distance" value="0.25"/>
+
+  <param name="/move_base/DWAPlannerROS/xy_goal_tolerance" value="0.45"/>
+  <param name="/move_base/DWAPlannerROS/yaw_goal_tolerance" value="0.65"/>
+  <param name="/move_base/DWAPlannerROS/latch_xy_goal_tolerance" value="true"/>
+
+  <param name="/move_base/DWAPlannerROS/max_vel_x" value="0.35"/>
+  <param name="/move_base/DWAPlannerROS/min_vel_x" value="0.10"/>
+  <param name="/move_base/DWAPlannerROS/max_vel_theta" value="0.70"/>
+  <param name="/move_base/DWAPlannerROS/min_vel_theta" value="0.15"/>
+  <param name="/move_base/DWAPlannerROS/acc_lim_x" value="0.60"/>
+  <param name="/move_base/DWAPlannerROS/acc_lim_theta" value="1.00"/>
+
+  <param name="/move_base/DWAPlannerROS/sim_time" value="1.3"/>
+  <param name="/move_base/DWAPlannerROS/vx_samples" value="10"/>
+  <param name="/move_base/DWAPlannerROS/vth_samples" value="18"/>
+
+  <param name="/move_base/DWAPlannerROS/stop_time_buffer" value="0.10"/>
+  <param name="/move_base/DWAPlannerROS/oscillation_reset_dist" value="0.25"/>
+  <param name="/move_base/DWAPlannerROS/rotate_to_goal" value="false"/>
+
+  <!-- Bias motion over perfection -->
+  <param name="/move_base/DWAPlannerROS/path_distance_bias" value="32.0"/>
+  <param name="/move_base/DWAPlannerROS/goal_distance_bias" value="20.0"/>
+
+  <!-- Increased obstacle repulsion (prevents wall shaving) -->
+  <param name="/move_base/DWAPlannerROS/occdist_scale" value="0.04"/>
+
+  <!-- ====================================================== -->
+  <!-- RADIATION GAUSSIAN PROCESS REGRESSION (OPTIONAL)       -->
+  <!-- ====================================================== -->
+  <group if="$(arg use_radiation)">
+    <node pkg="exploration_pkg"
+          type="rad_GPR_node.py"
+          name="rad_GPR_node"
+          output="screen"
+          respawn="true"
+          respawn_delay="2.0">
+
+      <param name="map_topic"  value="/map"/>
+      <param name="meas_topic" value="/radiation_sensor_plugin/sensor_0"/>
+
+      <param name="base_frame" value="$(arg base_frame)"/>
+      <param name="frame_id"   value="$(arg map_frame)"/>
+
+      <!-- Local, wall-safe predictions -->
+      <param name="use_reachable_mask" value="true"/>
+      <param name="local_radius_m" value="6.0"/>
+      <param name="local_margin_m" value="2.0"/>
+
+      <param name="length_scale" value="1.35"/>
+      <param name="noise_level"  value="0.30"/>
+
+      <param name="publish_period_s" value="0.35"/>
+      <param name="gp_refit_period_s" value="3.5"/>
+
+      <param name="smooth_sigma_cells" value="0.5"/>
+      <param name="scale_percentile" value="80.0"/>
+    </node>
+  </group>
+
+  <!-- ====================================================== -->
+  <!-- EXPLORATION POLICY (FLUID, FULL COVERAGE)              -->
+  <!-- ====================================================== -->
+  <node pkg="exploration_pkg"
+        type="exploration_policy_node.py"
+        name="exploration_policy"
+        output="screen"
+        respawn="true"
+        respawn_delay="1.0">
+
+    <!-- Frames -->
+    <param name="map_frame"  value="$(arg map_frame)"/>
+    <param name="base_frame" value="$(arg base_frame)"/>
+    <param name="odom_frame" value="$(arg odom_frame)"/>
+
+    <!-- Pose -->
+    <param name="pose_source" value="$(arg pose_source)"/>
+    <param name="amcl_topic"  value="$(arg amcl_topic)"/>
+    <param name="odom_topic"  value="$(arg odom_topic)"/>
+
+    <!-- Map semantics -->
+    <param name="free_max" value="25"/>
+    <param name="occ_min"  value="65"/>
+
+    <!-- Keep nodes away from walls -->
+    <param name="wall_buffer_m" value="0.35"/>
+
+    <!-- Enforce corridor clearance -->
+    <param name="strict_corridor_verification" value="true"/>
+    <param name="strict_min_clearance_m" value="0.30"/>
+
+    <!-- Graph geometry -->
+    <param name="target_node_spacing_m" value="1.05"/>
+    <param name="max_total_nodes" value="220"/>
+    <param name="max_neighbors" value="6"/>
+    <param name="edge_dist_max_m" value="4.5"/>
+
+    <!-- Frontier logic -->
+    <param name="frontier_limit" value="600"/>
+    <param name="frontier_unknown_ratio_min" value="0.05"/>
+    <param name="frontier_unknown_ratio_max" value="0.98"/>
+    <param name="frontier_min_goal_separation_m" value="1.4"/>
+
+    <!-- Exploration smoothness -->
+    <param name="goal_hold_min_s" value="3.5"/>
+    <param name="replan_period_s" value="1.2"/>
+    <param name="preplan_period_s" value="1.0"/>
+    <param name="preplan_min_progress" value="0.35"/>
+    <param name="nav_progress_eps" value="0.01"/>
+
+    <!-- Completion control -->
+    <param name="completion_unknown_ratio" value="0.001"/>
+    <param name="completion_confirm_cycles" value="25"/>
+    <param name="completion_min_total_distance_m" value="50.0"/>
+
+    <!-- Radiation -->
+    <param name="use_radiation" value="$(arg use_radiation)"/>
+    <param name="radiation_topic" value="/radiation_costmap"/>
+    <param name="radiation_sigma_topic" value="/radiation_sigma"/>
+
+    <param name="radiation_weight" value="0.55"/>
+    <param name="variance_weight" value="0.30"/>
+    <param name="radiation_edge_weight" value="0.10"/>
+
+    <!-- Mission control -->
+    <param name="enable_return_to_start" value="true"/>
+    <param name="return_goal_tolerance_m" value="0.75"/>
+    <param name="return_retry_timeout_s" value="45.0"/>
+
+    <!-- Feedback -->
+    <param name="nav_active_topic" value="/navigation/nav_active"/>
+    <param name="nav_goal_reached_topic" value="/navigation/nav_goal_reached"/>
+    <param name="nav_progress_topic" value="/navigation/nav_progress"/>
+
+  </node>
+
+  <!-- ====================================================== -->
+  <!-- CORRIDOR NAVIGATION EXECUTOR                           -->
+  <!-- ====================================================== -->
+  <node pkg="exploration_pkg"
+        type="navigation_corridor_node.py"
+        name="navigation_corridor"
+        output="screen"
+        respawn="true"
+        respawn_delay="1.0">
+
+    <param name="map_frame" value="$(arg map_frame)"/>
+    <param name="base_frame" value="$(arg base_frame)"/>
+
+    <param name="goal_topic" value="/exploration/goal"/>
+    <param name="corridor_topic" value="/exploration/corridor"/>
+
+    <param name="lock_to_corridor" value="true"/>
+    <param name="allow_interrupt" value="true"/>
+
+    <!-- Slightly looser waypoint acceptance -->
+    <param name="waypoint_reached_m" value="1.35"/>
+    <param name="final_goal_reached_m" value="0.85"/>
+    <param name="min_send_period_s" value="0.35"/>
+
+    <param name="clear_costmaps_service" value="/move_base/clear_costmaps"/>
+  </node>
+
+</launch>

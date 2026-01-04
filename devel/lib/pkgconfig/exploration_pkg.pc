@@ -1,0 +1,8 @@
+prefix=/home/david/radtest_ws/devel
+
+Name: exploration_pkg
+Description: Description of exploration_pkg
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

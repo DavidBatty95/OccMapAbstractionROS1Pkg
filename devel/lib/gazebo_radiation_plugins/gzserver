@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+rosrun gazebo_ros gzserver -s "/home/david/radtest_ws/devel/lib/libcustom_sensor_preloader.so" "$@"

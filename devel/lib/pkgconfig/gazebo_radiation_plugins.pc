@@ -1,0 +1,8 @@
+prefix=/home/david/radtest_ws/devel
+
+Name: gazebo_radiation_plugins
+Description: Description of gazebo_radiation_plugins
+Version: 1.0.1
+Cflags: -I/home/david/radtest_ws/devel/include -I/home/david/radtest_ws/src/gazebo_radiation_plugin/include
+Libs: -L${prefix}/lib -lgazebo_radiation_plugins -lradiation_source -lradiation_source_plugin -lradiation_sensor -lradiation_sensor_plugin
+Requires: gazebo_dev pluginlib rosbash message_runtime
