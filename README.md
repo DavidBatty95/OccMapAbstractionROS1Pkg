@@ -1,5 +1,11 @@
 # ☢️ OccMapAbstractionROS1Pkg
 
+🚧 Work in Progress — Repository Under Active Development 🚧
+
+This repository contains currently unsorted research code developed as part of a PhD project investigating radiation-aware autonomous exploration and navigation for mobile robots operating in hazardous and initially unknown environments.
+
+---
+
 A **ROS 1 Gazebo simulation workspace** for research into  
 **radiation-aware autonomous exploration and navigation**.
 
