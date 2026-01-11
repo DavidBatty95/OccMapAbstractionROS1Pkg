@@ -31,3 +31,79 @@ This repository represents the **primary simulation platform** used to evaluate 
 
 ## 📁 Repository Structure
 
+OccMapAbstractionROS1Pkg/
+├── src/ # All ROS packages
+├── launch/ # Simulation & experiment launch files
+├── worlds/ # Gazebo nuclear environments
+├── maps/ # Test and real-world maps
+├── models/ # Gazebo models
+└── README.md
+
+
+---
+
+# 🧠 What This Workspace Implements
+☢️ **Radiation-Aware Simulation**
+
+Custom Gazebo plugins provide radiation sources and sensors that publish realistic radiation measurements into ROS topics.
+
+🗺 **Occupancy Map Abstraction**
+
+Dense occupancy grids are converted into sparse node graphs suitable for planning in large environments.
+
+🧭 **Frontier-Based Exploration**
+
+The robot selects navigation targets at the boundary between known and unknown space to drive systematic exploration.
+
+📊 **Radiation Field Estimation**
+
+Online models estimate the radiation distribution in the environment, allowing the robot to reason about dose and risk.
+
+🤖 **Navigation Coordination**
+
+High-level logic chooses safe and efficient routes through hazardous environments.
+
+---
+
+# 🎯 Intended Use
+
+This repository is designed for:
+
+🔬 Research and experimentation
+
+📄 Thesis and paper reproducibility
+
+🧪 Simulation-based validation of radiation-aware autonomy
+
+It is not intended to be a plug-and-play ROS navigation stack for production robots.
+
+---
+
+# 🔧 Development Status
+
+This is an active research workspace.
+Code, package structure, and launch files will continue to evolve as experiments and publications progress.
+
+Planned improvements include:
+
+Cleaner package modularisation
+
+More documented launch pipelines
+
+Example experiment configurations
+
+---
+
+# 👤 Author
+
+Author: David Batty
+Email: dwbatty@liverpool.ac.uk
+University of Liverpool — School of Engineering
+Research focus: Radiation-aware autonomous exploration in hazardous environments
+
+---
+
+# 📜 License
+
+License will be finalised once the workspace stabilises.
+For now, please contact the author regarding reuse or redistribution.
