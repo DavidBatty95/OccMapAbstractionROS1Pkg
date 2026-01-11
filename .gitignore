@@ -1,0 +1,24 @@
+# Catkin build products
+build/
+devel/
+
+# ROS logs
+.log
+logs/
+
+# Gazebo junk
+*.log
+*.state
+gazebo/
+.world~ 
+
+# Python
+__pycache__/
+*.pyc
+
+# Editors
+.vscode/
+.idea/
+
+# OS
+.DS_Store
