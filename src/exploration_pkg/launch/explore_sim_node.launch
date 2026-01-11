@@ -3,7 +3,7 @@
   <param name="use_sim_time" value="false"/>
 
   <!-- Which map to load -->
-  <arg name="map" default="hut_expanded"/>
+  <arg name="map" default="reactor_room_sim"/>
 
   <!-- Go2 visualisation (RViz only) -->
   <include file="$(find go2_description)/launch/go2_rviz.launch"/>
