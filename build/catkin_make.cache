@@ -1,2 +1,2 @@
-exploration_pkg:gazebo_radiation_plugin:simple_radiation_layer
+exploration_pkg:gazebo_radiation_plugin:simple_radiation_layer:unitree_ros/robots/go2_description
 -DCATKIN_DEVEL_PREFIX=/home/david/radtest_ws/devel -DCMAKE_INSTALL_PREFIX=/home/david/radtest_ws/install -G Unix Makefiles

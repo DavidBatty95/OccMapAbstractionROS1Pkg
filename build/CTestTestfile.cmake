@@ -7,4 +7,5 @@
 subdirs("gtest")
 subdirs("exploration_pkg")
 subdirs("gazebo_radiation_plugin")
+subdirs("unitree_ros/robots/go2_description")
 subdirs("simple_radiation_layer")

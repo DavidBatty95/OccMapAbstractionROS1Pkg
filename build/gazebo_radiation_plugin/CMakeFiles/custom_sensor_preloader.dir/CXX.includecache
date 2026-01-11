@@ -32,6 +32,14 @@ gazebo/physics/PhysicsFactory.hh
 gazebo/sensors/SensorManager.hh
 -
 
+/opt/ros/foxy/include/console_bridge/console.h
+string
+-
+./console_bridge_export.h
+/opt/ros/foxy/include/console_bridge/console_bridge_export.h
+
+/opt/ros/foxy/include/console_bridge_export.h
+
 /opt/ros/noetic/include/class_loader/class_loader.hpp
 boost/bind.hpp
 -

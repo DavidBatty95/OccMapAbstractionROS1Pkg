@@ -3,6 +3,8 @@
 
 gazebo_radiation_plugin/CMakeFiles/custom_sensor_preloader.dir/src/CustomSensorPreloader.cpp.o: /home/david/radtest_ws/src/gazebo_radiation_plugin/include/gazebo_radiation_plugins/CustomSensorPreloader.h
 gazebo_radiation_plugin/CMakeFiles/custom_sensor_preloader.dir/src/CustomSensorPreloader.cpp.o: /home/david/radtest_ws/src/gazebo_radiation_plugin/src/CustomSensorPreloader.cpp
+gazebo_radiation_plugin/CMakeFiles/custom_sensor_preloader.dir/src/CustomSensorPreloader.cpp.o: /opt/ros/foxy/include/console_bridge/console.h
+gazebo_radiation_plugin/CMakeFiles/custom_sensor_preloader.dir/src/CustomSensorPreloader.cpp.o: /opt/ros/foxy/include/console_bridge_export.h
 gazebo_radiation_plugin/CMakeFiles/custom_sensor_preloader.dir/src/CustomSensorPreloader.cpp.o: /opt/ros/noetic/include/class_loader/class_loader.hpp
 gazebo_radiation_plugin/CMakeFiles/custom_sensor_preloader.dir/src/CustomSensorPreloader.cpp.o: /opt/ros/noetic/include/class_loader/class_loader_core.hpp
 gazebo_radiation_plugin/CMakeFiles/custom_sensor_preloader.dir/src/CustomSensorPreloader.cpp.o: /opt/ros/noetic/include/class_loader/exceptions.hpp

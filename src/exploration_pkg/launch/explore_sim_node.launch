@@ -1,0 +1,35 @@
+<launch>
+  <!-- Not using Gazebo -->
+  <param name="use_sim_time" value="false"/>
+
+  <!-- Which map to load -->
+  <arg name="map" default="hut_expanded"/>
+
+  <!-- Go2 visualisation (RViz only) -->
+  <include file="$(find go2_description)/launch/go2_rviz.launch"/>
+
+  <!-- ExploreSim: fog-of-war + TF + A* nav -->
+  <node pkg="exploration_pkg"
+        type="explore_sim_node.py"
+        name="explore_sim_node"
+        output="screen">
+
+    <param name="map" value="$(arg map)"/>
+
+    <!-- These only matter if your script reads them; otherwise harmless -->
+    <param name="sensor_range_m" value="15.0"/>
+    <param name="num_rays" value="360"/>
+    <param name="ray_fill_offsets" value="2"/>
+
+    <!-- Make it look smooth -->
+    <param name="update_rate_hz" value="12.0"/>
+    <param name="lin_speed" value="0.45"/>
+    <param name="max_yaw_rate" value="1.6"/>
+    <param name="lookahead_m" value="1.0"/>
+    <param name="goal_tolerance" value="0.25"/>
+
+    <!-- Planning realism -->
+    <param name="inflation_radius_m" value="0.15"/>
+    <param name="unknown_is_obstacle" value="false"/>
+  </node>
+</launch>

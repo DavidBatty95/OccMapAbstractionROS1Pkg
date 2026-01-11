@@ -68,18 +68,6 @@ install/local/fast: preinstall/fast
 	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 .PHONY : install/local/fast
 
-# Special rule for the target install
-install: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install
-
-# Special rule for the target install
-install/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -134,6 +122,18 @@ list_install_components:
 list_install_components/fast: list_install_components
 
 .PHONY : list_install_components/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -318,36 +318,6 @@ map_msgs_generate_messages_cpp/fast:
 .PHONY : map_msgs_generate_messages_cpp/fast
 
 # Convenience name for target.
-simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/rule:
-	cd /home/david/radtest_ws/build && $(MAKE) -f CMakeFiles/Makefile2 simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/rule
-.PHONY : simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/rule
-
-# Convenience name for target.
-radiation_layer_generate_messages_py: simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/rule
-
-.PHONY : radiation_layer_generate_messages_py
-
-# fast build rule for target.
-radiation_layer_generate_messages_py/fast:
-	cd /home/david/radtest_ws/build && $(MAKE) -f simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/build.make simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/build
-.PHONY : radiation_layer_generate_messages_py/fast
-
-# Convenience name for target.
-simple_radiation_layer/CMakeFiles/_catkin_empty_exported_target.dir/rule:
-	cd /home/david/radtest_ws/build && $(MAKE) -f CMakeFiles/Makefile2 simple_radiation_layer/CMakeFiles/_catkin_empty_exported_target.dir/rule
-.PHONY : simple_radiation_layer/CMakeFiles/_catkin_empty_exported_target.dir/rule
-
-# Convenience name for target.
-_catkin_empty_exported_target: simple_radiation_layer/CMakeFiles/_catkin_empty_exported_target.dir/rule
-
-.PHONY : _catkin_empty_exported_target
-
-# fast build rule for target.
-_catkin_empty_exported_target/fast:
-	cd /home/david/radtest_ws/build && $(MAKE) -f simple_radiation_layer/CMakeFiles/_catkin_empty_exported_target.dir/build.make simple_radiation_layer/CMakeFiles/_catkin_empty_exported_target.dir/build
-.PHONY : _catkin_empty_exported_target/fast
-
-# Convenience name for target.
 simple_radiation_layer/CMakeFiles/costmap_2d_generate_messages_lisp.dir/rule:
 	cd /home/david/radtest_ws/build && $(MAKE) -f CMakeFiles/Makefile2 simple_radiation_layer/CMakeFiles/costmap_2d_generate_messages_lisp.dir/rule
 .PHONY : simple_radiation_layer/CMakeFiles/costmap_2d_generate_messages_lisp.dir/rule
@@ -528,6 +498,21 @@ radiation_layer_gennodejs/fast:
 .PHONY : radiation_layer_gennodejs/fast
 
 # Convenience name for target.
+simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/rule:
+	cd /home/david/radtest_ws/build && $(MAKE) -f CMakeFiles/Makefile2 simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/rule
+.PHONY : simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/rule
+
+# Convenience name for target.
+radiation_layer_generate_messages_py: simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/rule
+
+.PHONY : radiation_layer_generate_messages_py
+
+# fast build rule for target.
+radiation_layer_generate_messages_py/fast:
+	cd /home/david/radtest_ws/build && $(MAKE) -f simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/build.make simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/build
+.PHONY : radiation_layer_generate_messages_py/fast
+
+# Convenience name for target.
 simple_radiation_layer/CMakeFiles/radiation_layer_gencfg.dir/rule:
 	cd /home/david/radtest_ws/build && $(MAKE) -f CMakeFiles/Makefile2 simple_radiation_layer/CMakeFiles/radiation_layer_gencfg.dir/rule
 .PHONY : simple_radiation_layer/CMakeFiles/radiation_layer_gencfg.dir/rule
@@ -576,7 +561,6 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... install/local"
-	@echo "... install"
 	@echo "... radiation_layer_generate_messages"
 	@echo "... map_msgs_generate_messages_nodejs"
 	@echo "... costmap_2d_gencfg"
@@ -588,8 +572,6 @@ help:
 	@echo "... costmap_2d_generate_messages_nodejs"
 	@echo "... costmap_2d_generate_messages_eus"
 	@echo "... map_msgs_generate_messages_cpp"
-	@echo "... radiation_layer_generate_messages_py"
-	@echo "... _catkin_empty_exported_target"
 	@echo "... costmap_2d_generate_messages_lisp"
 	@echo "... radiation_layer_generate_messages_cpp"
 	@echo "... costmap_2d_generate_messages_cpp"
@@ -605,8 +587,10 @@ help:
 	@echo "... rad_layer"
 	@echo "... edit_cache"
 	@echo "... radiation_layer_gennodejs"
+	@echo "... radiation_layer_generate_messages_py"
 	@echo "... radiation_layer_gencfg"
 	@echo "... list_install_components"
+	@echo "... install"
 	@echo "... src/rad_layer_plugin.o"
 	@echo "... src/rad_layer_plugin.i"
 	@echo "... src/rad_layer_plugin.s"

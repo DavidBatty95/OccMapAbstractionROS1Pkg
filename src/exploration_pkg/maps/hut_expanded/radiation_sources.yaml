@@ -1,0 +1,33 @@
+# Radiation source configuration for this environment
+# All positions are in MAP FRAME coordinates (meters)
+# Walls are assumed perfectly attenuating in the simulator
+attenuation:
+  model: inverse_square
+  wall_attenuation: 0.35
+  max_range: 20.0
+
+sources:
+  - id: src_1
+    position: [-0.5 , -2.5]
+    strength: 600.0
+  - id: src_2
+    position: [9.5 , 5.5]
+    strength: 1200.0
+  - id: src_3
+    position: [18.0 , 1.0]
+    strength: 600.0
+  - id: src_4
+    position: [17.5 , 5.5]
+    strength: 1200.0
+  - id: src_5
+    position: [27.0 , -2.0]
+    strength: 900.0
+  - id: src_6
+    position: [34.0 , 0.0]
+    strength: 900.0
+  - id: src_7
+    position: [19.0 , 10.0]
+    strength: 900.0
+  - id: src_8
+    position: [20.0 , 6.0]
+    strength: 900.0

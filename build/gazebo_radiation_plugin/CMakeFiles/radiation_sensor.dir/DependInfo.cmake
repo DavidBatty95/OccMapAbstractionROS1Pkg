@@ -47,6 +47,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/usr/include/ignition/common3"
   "/usr/include/ignition/fuel_tools4"
   "/usr/include/eigen3"
+  "/opt/ros/foxy/include"
   "/usr/include/sdformat-9.10/sdf/.."
   "/usr/include/ignition/cmake2"
   "/usr/include/uuid"

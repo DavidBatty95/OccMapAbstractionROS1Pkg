@@ -215,8 +215,8 @@ radiation_sensor_plugin_EXTERNAL_OBJECTS =
 /home/david/radtest_ws/devel/lib/libradiation_sensor_plugin.so: /usr/lib/x86_64-linux-gnu/libccd.so
 /home/david/radtest_ws/devel/lib/libradiation_sensor_plugin.so: /usr/lib/x86_64-linux-gnu/libfcl.so
 /home/david/radtest_ws/devel/lib/libradiation_sensor_plugin.so: /usr/lib/x86_64-linux-gnu/libassimp.so
-/home/david/radtest_ws/devel/lib/libradiation_sensor_plugin.so: /usr/lib/x86_64-linux-gnu/liboctomap.so.1.9.3
-/home/david/radtest_ws/devel/lib/libradiation_sensor_plugin.so: /usr/lib/x86_64-linux-gnu/liboctomath.so.1.9.3
+/home/david/radtest_ws/devel/lib/libradiation_sensor_plugin.so: /opt/ros/foxy/lib/liboctomap.so.1.9.8
+/home/david/radtest_ws/devel/lib/libradiation_sensor_plugin.so: /opt/ros/foxy/lib/liboctomath.so.1.9.8
 /home/david/radtest_ws/devel/lib/libradiation_sensor_plugin.so: /usr/lib/x86_64-linux-gnu/libboost_atomic.so.1.71.0
 /home/david/radtest_ws/devel/lib/libradiation_sensor_plugin.so: /usr/lib/x86_64-linux-gnu/libignition-transport8.so.8.5.0
 /home/david/radtest_ws/devel/lib/libradiation_sensor_plugin.so: /usr/lib/x86_64-linux-gnu/libignition-fuel_tools4.so.4.9.1

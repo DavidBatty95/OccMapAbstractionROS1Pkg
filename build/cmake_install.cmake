@@ -133,6 +133,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/david/radtest_ws/build/gtest/cmake_install.cmake")
   include("/home/david/radtest_ws/build/exploration_pkg/cmake_install.cmake")
   include("/home/david/radtest_ws/build/gazebo_radiation_plugin/cmake_install.cmake")
+  include("/home/david/radtest_ws/build/unitree_ros/robots/go2_description/cmake_install.cmake")
   include("/home/david/radtest_ws/build/simple_radiation_layer/cmake_install.cmake")
 
 endif()

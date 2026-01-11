@@ -4,6 +4,8 @@
 gazebo_radiation_plugin/CMakeFiles/custom_sensor_preloader.dir/src/CustomSensorPreloader.cpp.o
  /home/david/radtest_ws/src/gazebo_radiation_plugin/include/gazebo_radiation_plugins/CustomSensorPreloader.h
  /home/david/radtest_ws/src/gazebo_radiation_plugin/src/CustomSensorPreloader.cpp
+ /opt/ros/foxy/include/console_bridge/console.h
+ /opt/ros/foxy/include/console_bridge_export.h
  /opt/ros/noetic/include/class_loader/class_loader.hpp
  /opt/ros/noetic/include/class_loader/class_loader_core.hpp
  /opt/ros/noetic/include/class_loader/exceptions.hpp

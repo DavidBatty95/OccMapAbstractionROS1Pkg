@@ -37,73 +37,130 @@ class CorridorNavigator:
     def __init__(self):
         rospy.init_node("navigation_corridor", anonymous=False)
 
+        # --------------------------------------------------
         # Frames
+        # --------------------------------------------------
         self.map_frame = rospy.get_param("~map_frame", "map")
         self.base_frame = rospy.get_param("~base_frame", "base_link")
 
-        # Topics
-        self.goal_topic = rospy.get_param("~goal_topic", "/exploration/goal")
-        self.corridor_topic = rospy.get_param("~corridor_topic", "/exploration/corridor")
+        # --------------------------------------------------
+        # Goal & corridor topics
+        # --------------------------------------------------
+        # NEW: accept RViz 2D Nav Goal directly
+        self.rviz_goal_topic = rospy.get_param(
+            "~rviz_goal_topic", "/move_base_simple/goal"
+        )
 
+        # Existing exploration goal topic (kept for compatibility)
+        self.goal_topic = rospy.get_param(
+            "~goal_topic", "/exploration/goal"
+        )
+
+        self.corridor_topic = rospy.get_param(
+            "~corridor_topic", "/exploration/corridor"
+        )
+
+        # --------------------------------------------------
+        # Markers
+        # --------------------------------------------------
         self.publish_markers = bool(rospy.get_param("~publish_markers", True))
-        self.marker_topic = rospy.get_param("~marker_topic", "/navigation_markers")
+        self.marker_topic = rospy.get_param(
+            "~marker_topic", "/navigation_markers"
+        )
 
+        # --------------------------------------------------
         # move_base
-        self.move_base_action = rospy.get_param("~move_base_action", "/move_base")
+        # --------------------------------------------------
+        self.move_base_action = rospy.get_param(
+            "~move_base_action", "/move_base"
+        )
 
-        # Waypoint tolerance
+        # --------------------------------------------------
+        # Waypoint tolerances
+        # --------------------------------------------------
         self.waypoint_reached_m = float(rospy.get_param("~waypoint_reached_m", 0.55))
         self.final_goal_reached_m = float(rospy.get_param("~final_goal_reached_m", 0.85))
         self.min_send_period_s = float(rospy.get_param("~min_send_period_s", 0.8))
 
+        # --------------------------------------------------
         # Waypoint skipping
+        # --------------------------------------------------
         self.skip_ahead_margin_m = float(rospy.get_param("~skip_ahead_margin_m", 0.15))
 
+        # --------------------------------------------------
         # Corridor processing
+        # --------------------------------------------------
         self.drop_near_robot_waypoints = bool(rospy.get_param("~drop_near_robot_waypoints", True))
         self.trim_start_dist_m = float(rospy.get_param("~trim_start_dist_m", 0.75))
         self.resample_min_dist = float(rospy.get_param("~resample_min_dist", 0.8))
         self.resample_max_dist = float(rospy.get_param("~resample_max_dist", 2.6))
         self._inv_resample_max = 1.0 / max(self.resample_max_dist, 1e-6)
 
+        # --------------------------------------------------
         # Nav feedback topics
-        self.pub_nav_active = rospy.Publisher("/navigation/nav_active", Bool, queue_size=10, latch=True)
-        self.pub_nav_goal_reached = rospy.Publisher("/navigation/nav_goal_reached", Bool, queue_size=10, latch=True)
-        self.pub_nav_progress = rospy.Publisher("/navigation/nav_progress", Float32, queue_size=10)
+        # --------------------------------------------------
+        self.pub_nav_active = rospy.Publisher(
+            "/navigation/nav_active", Bool, queue_size=10, latch=True
+        )
+        self.pub_nav_goal_reached = rospy.Publisher(
+            "/navigation/nav_goal_reached", Bool, queue_size=10, latch=True
+        )
+        self.pub_nav_progress = rospy.Publisher(
+            "/navigation/nav_progress", Float32, queue_size=10
+        )
 
-        self.pub_markers = rospy.Publisher(self.marker_topic, MarkerArray, queue_size=1) if self.publish_markers else None
+        self.pub_markers = (
+            rospy.Publisher(self.marker_topic, MarkerArray, queue_size=1)
+            if self.publish_markers else None
+        )
 
+        # --------------------------------------------------
         # Internal state
+        # --------------------------------------------------
         self._corridor: Optional[Path] = None
         self._goal: Optional[PoseStamped] = None
 
         self._waypoints: List[PoseStamped] = []
         self._waypoints_xy: List[Tuple[float, float]] = []
         self._active_idx = 0
-
         self._last_send_t = 0.0
 
+        # --------------------------------------------------
         # TF
+        # --------------------------------------------------
         import tf2_ros
         self.tf_buf = tf2_ros.Buffer(cache_time=rospy.Duration(10.0))
         self.tf_listener = tf2_ros.TransformListener(self.tf_buf)
+
         self._robot_xy_cache: Optional[Tuple[float, float]] = None
         self._robot_xy_cache_t = 0.0
 
+        # --------------------------------------------------
         # move_base client
-        self.client = actionlib.SimpleActionClient(self.move_base_action, MoveBaseAction)
+        # --------------------------------------------------
+        self.client = actionlib.SimpleActionClient(
+            self.move_base_action, MoveBaseAction
+        )
         rospy.loginfo("Waiting for move_base action server: %s", self.move_base_action)
         self.client.wait_for_server()
-        rospy.loginfo("Navigation Corridor ready (optimised, behaviour-identical).")
+        rospy.loginfo("Navigation Corridor ready.")
 
+        # --------------------------------------------------
         # Subscribers
+        # --------------------------------------------------
         rospy.Subscriber(self.corridor_topic, Path, self._on_corridor, queue_size=1)
+
+        # NEW: accept RViz goal
+        rospy.Subscriber(self.rviz_goal_topic, PoseStamped, self._on_goal, queue_size=1)
+
+        # Existing exploration goal
         rospy.Subscriber(self.goal_topic, PoseStamped, self._on_goal, queue_size=1)
 
         rospy.Timer(rospy.Duration(0.10), self._tick)
 
     # ------------------------------------------------------------------
-
+    # Robot pose
+    # ------------------------------------------------------------------
     def _get_robot_xy(self) -> Optional[Tuple[float, float]]:
         now = now_s()
         if self._robot_xy_cache and (now - self._robot_xy_cache_t) < 0.05:
@@ -116,22 +173,43 @@ class CorridorNavigator:
                 rospy.Time(0),
                 rospy.Duration(0.2),
             )
-            xy = (float(tr.transform.translation.x), float(tr.transform.translation.y))
+            xy = (
+                float(tr.transform.translation.x),
+                float(tr.transform.translation.y),
+            )
             self._robot_xy_cache = xy
             self._robot_xy_cache_t = now
             return xy
         except Exception:
             return None
 
+    # ------------------------------------------------------------------
+    # Callbacks
+    # ------------------------------------------------------------------
     def _on_goal(self, msg: PoseStamped):
+        if msg.header.frame_id.strip("/") != self.map_frame:
+            rospy.logwarn_throttle(
+                2.0,
+                "[CORRIDOR] Ignoring goal in frame '%s' (expected '%s')",
+                msg.header.frame_id,
+                self.map_frame,
+            )
+            return
+
         self._goal = msg
+        rospy.loginfo(
+            "[CORRIDOR] Goal received: x=%.2f y=%.2f",
+            msg.pose.position.x,
+            msg.pose.position.y,
+        )
 
     def _on_corridor(self, msg: Path):
         self._corridor = msg
         self._prepare_waypoints()
 
     # ------------------------------------------------------------------
-
+    # Waypoint preparation
+    # ------------------------------------------------------------------
     def _prepare_waypoints(self):
         if not self._corridor or not self._corridor.poses:
             return
@@ -148,7 +226,10 @@ class CorridorNavigator:
                 wps.pop(0)
 
         if not wps:
-            wps = [self._goal] if self._goal else [self._corridor.poses[-1]]
+            if self._goal:
+                wps = [self._goal]
+            else:
+                return
 
         wps = self._resample_waypoints(wps)
 
@@ -189,7 +270,55 @@ class CorridorNavigator:
         return out
 
     # ------------------------------------------------------------------
+    # Navigation tick
+    # ------------------------------------------------------------------
+    def _tick(self, _evt):
+        if not self._waypoints:
+            self.pub_nav_active.publish(Bool(data=False))
+            return
 
+        robot = self._get_robot_xy()
+        if robot is None:
+            return
+
+        while self._active_idx + 1 < len(self._waypoints_xy):
+            cx, cy = self._waypoints_xy[self._active_idx]
+            nx, ny = self._waypoints_xy[self._active_idx + 1]
+            d_curr = math.hypot(cx - robot[0], cy - robot[1])
+            d_next = math.hypot(nx - robot[0], ny - robot[1])
+            if d_next + self.skip_ahead_margin_m < d_curr:
+                self._active_idx += 1
+            else:
+                break
+
+        wx, wy = self._waypoints_xy[self._active_idx]
+        d = math.hypot(wx - robot[0], wy - robot[1])
+
+        tol = (
+            self.final_goal_reached_m
+            if self._active_idx == len(self._waypoints_xy) - 1
+            else self.waypoint_reached_m
+        )
+
+        if d <= tol:
+            if self._active_idx == len(self._waypoints_xy) - 1:
+                self.pub_nav_goal_reached.publish(Bool(data=True))
+                self.pub_nav_active.publish(Bool(data=False))
+                self._waypoints.clear()
+                self._waypoints_xy.clear()
+                rospy.loginfo("[NAV] Final goal reached.")
+                return
+            self._active_idx += 1
+            return
+
+        if (now_s() - self._last_send_t) >= self.min_send_period_s:
+            state = self.client.get_state()
+            if state not in [actionlib.GoalStatus.PENDING, actionlib.GoalStatus.ACTIVE]:
+                self._send_goal(self._active_idx)
+
+    # ------------------------------------------------------------------
+    # Send goal
+    # ------------------------------------------------------------------
     def _send_goal(self, idx: int):
         wp = self._waypoints[idx]
         g = MoveBaseGoal()
@@ -209,73 +338,6 @@ class CorridorNavigator:
         self._last_send_t = now_s()
         self.pub_nav_active.publish(Bool(data=True))
         self.pub_nav_goal_reached.publish(Bool(data=False))
-
-    # ------------------------------------------------------------------
-
-    def _tick(self, _evt):
-        if not self._waypoints:
-            self.pub_nav_active.publish(Bool(data=False))
-            return
-
-        robot = self._get_robot_xy()
-        if robot is None:
-            self.pub_nav_active.publish(Bool(data=False))
-            return
-
-        # Skip-ahead logic
-        while self._active_idx + 1 < len(self._waypoints_xy):
-            cx, cy = self._waypoints_xy[self._active_idx]
-            nx, ny = self._waypoints_xy[self._active_idx + 1]
-            d_curr = math.hypot(cx - robot[0], cy - robot[1])
-            d_next = math.hypot(nx - robot[0], ny - robot[1])
-            if d_next + self.skip_ahead_margin_m < d_curr:
-                self._active_idx += 1
-            else:
-                break
-
-        wx, wy = self._waypoints_xy[self._active_idx]
-        d = math.hypot(wx - robot[0], wy - robot[1])
-
-        tol = self.final_goal_reached_m if self._active_idx == len(self._waypoints_xy) - 1 else self.waypoint_reached_m
-        if d <= tol:
-            if self._active_idx == len(self._waypoints_xy) - 1:
-                self.pub_nav_goal_reached.publish(Bool(data=True))
-                self.pub_nav_active.publish(Bool(data=False))
-                self._waypoints.clear()
-                self._waypoints_xy.clear()
-                rospy.loginfo("[NAV] final goal reached.")
-                return
-            self._active_idx += 1
-            return
-
-        if (now_s() - self._last_send_t) >= self.min_send_period_s:
-            state = self.client.get_state()
-            if state not in [actionlib.GoalStatus.PENDING, actionlib.GoalStatus.ACTIVE]:
-                self._send_goal(self._active_idx)
-                self._publish_markers(wx, wy)
-
-    # ------------------------------------------------------------------
-
-    def _publish_markers(self, wx: float, wy: float):
-        if self.pub_markers is None:
-            return
-        ma = MarkerArray()
-        m = Marker()
-        m.header.frame_id = self.map_frame
-        m.header.stamp = rospy.Time.now()
-        m.ns = "nav"
-        m.id = 1
-        m.type = Marker.SPHERE
-        m.scale.x = m.scale.y = m.scale.z = 0.20
-        m.pose.position.x = wx
-        m.pose.position.y = wy
-        m.pose.orientation.w = 1.0
-        m.color.r = 1.0
-        m.color.g = 0.8
-        m.color.b = 0.1
-        m.color.a = 0.95
-        ma.markers.append(m)
-        self.pub_markers.publish(ma)
 
 
 if __name__ == "__main__":

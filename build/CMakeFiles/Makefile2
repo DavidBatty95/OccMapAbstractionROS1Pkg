@@ -56,6 +56,7 @@ CMAKE_BINARY_DIR = /home/david/radtest_ws/build
 all: gtest/all
 all: exploration_pkg/all
 all: gazebo_radiation_plugin/all
+all: unitree_ros/robots/go2_description/all
 all: simple_radiation_layer/all
 
 .PHONY : all
@@ -64,6 +65,7 @@ all: simple_radiation_layer/all
 preinstall: gtest/preinstall
 preinstall: exploration_pkg/preinstall
 preinstall: gazebo_radiation_plugin/preinstall
+preinstall: unitree_ros/robots/go2_description/preinstall
 preinstall: simple_radiation_layer/preinstall
 
 .PHONY : preinstall
@@ -77,6 +79,7 @@ clean: CMakeFiles/download_extra_data.dir/clean
 clean: gtest/clean
 clean: exploration_pkg/clean
 clean: gazebo_radiation_plugin/clean
+clean: unitree_ros/robots/go2_description/clean
 clean: simple_radiation_layer/clean
 
 .PHONY : clean
@@ -303,8 +306,6 @@ simple_radiation_layer/clean: simple_radiation_layer/CMakeFiles/costmap_2d_gener
 simple_radiation_layer/clean: simple_radiation_layer/CMakeFiles/costmap_2d_generate_messages_nodejs.dir/clean
 simple_radiation_layer/clean: simple_radiation_layer/CMakeFiles/costmap_2d_generate_messages_eus.dir/clean
 simple_radiation_layer/clean: simple_radiation_layer/CMakeFiles/map_msgs_generate_messages_cpp.dir/clean
-simple_radiation_layer/clean: simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/clean
-simple_radiation_layer/clean: simple_radiation_layer/CMakeFiles/_catkin_empty_exported_target.dir/clean
 simple_radiation_layer/clean: simple_radiation_layer/CMakeFiles/costmap_2d_generate_messages_lisp.dir/clean
 simple_radiation_layer/clean: simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_cpp.dir/clean
 simple_radiation_layer/clean: simple_radiation_layer/CMakeFiles/costmap_2d_generate_messages_cpp.dir/clean
@@ -317,9 +318,28 @@ simple_radiation_layer/clean: simple_radiation_layer/CMakeFiles/radiation_layer_
 simple_radiation_layer/clean: simple_radiation_layer/CMakeFiles/radiation_layer_genlisp.dir/clean
 simple_radiation_layer/clean: simple_radiation_layer/CMakeFiles/rad_layer.dir/clean
 simple_radiation_layer/clean: simple_radiation_layer/CMakeFiles/radiation_layer_gennodejs.dir/clean
+simple_radiation_layer/clean: simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/clean
 simple_radiation_layer/clean: simple_radiation_layer/CMakeFiles/radiation_layer_gencfg.dir/clean
 
 .PHONY : simple_radiation_layer/clean
+
+#=============================================================================
+# Directory level rules for directory unitree_ros/robots/go2_description
+
+# Recursive "all" directory target.
+unitree_ros/robots/go2_description/all:
+
+.PHONY : unitree_ros/robots/go2_description/all
+
+# Recursive "preinstall" directory target.
+unitree_ros/robots/go2_description/preinstall:
+
+.PHONY : unitree_ros/robots/go2_description/preinstall
+
+# Recursive "clean" directory target.
+unitree_ros/robots/go2_description/clean: unitree_ros/robots/go2_description/CMakeFiles/_catkin_empty_exported_target.dir/clean
+
+.PHONY : unitree_ros/robots/go2_description/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/doxygen.dir
@@ -3665,14 +3685,41 @@ gazebo_radiation_plugin/CMakeFiles/_gazebo_radiation_plugins_generate_messages_c
 .PHONY : gazebo_radiation_plugin/CMakeFiles/_gazebo_radiation_plugins_generate_messages_check_deps_GenWorldsFromModels.dir/clean
 
 #=============================================================================
+# Target rules for target unitree_ros/robots/go2_description/CMakeFiles/_catkin_empty_exported_target.dir
+
+# All Build rule for target.
+unitree_ros/robots/go2_description/CMakeFiles/_catkin_empty_exported_target.dir/all:
+	$(MAKE) -f unitree_ros/robots/go2_description/CMakeFiles/_catkin_empty_exported_target.dir/build.make unitree_ros/robots/go2_description/CMakeFiles/_catkin_empty_exported_target.dir/depend
+	$(MAKE) -f unitree_ros/robots/go2_description/CMakeFiles/_catkin_empty_exported_target.dir/build.make unitree_ros/robots/go2_description/CMakeFiles/_catkin_empty_exported_target.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/david/radtest_ws/build/CMakeFiles --progress-num= "Built target _catkin_empty_exported_target"
+.PHONY : unitree_ros/robots/go2_description/CMakeFiles/_catkin_empty_exported_target.dir/all
+
+# Build rule for subdir invocation for target.
+unitree_ros/robots/go2_description/CMakeFiles/_catkin_empty_exported_target.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/david/radtest_ws/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 unitree_ros/robots/go2_description/CMakeFiles/_catkin_empty_exported_target.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/david/radtest_ws/build/CMakeFiles 0
+.PHONY : unitree_ros/robots/go2_description/CMakeFiles/_catkin_empty_exported_target.dir/rule
+
+# Convenience name for target.
+_catkin_empty_exported_target: unitree_ros/robots/go2_description/CMakeFiles/_catkin_empty_exported_target.dir/rule
+
+.PHONY : _catkin_empty_exported_target
+
+# clean rule for target.
+unitree_ros/robots/go2_description/CMakeFiles/_catkin_empty_exported_target.dir/clean:
+	$(MAKE) -f unitree_ros/robots/go2_description/CMakeFiles/_catkin_empty_exported_target.dir/build.make unitree_ros/robots/go2_description/CMakeFiles/_catkin_empty_exported_target.dir/clean
+.PHONY : unitree_ros/robots/go2_description/CMakeFiles/_catkin_empty_exported_target.dir/clean
+
+#=============================================================================
 # Target rules for target simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages.dir
 
 # All Build rule for target.
-simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages.dir/all: simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/all
 simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages.dir/all: simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_cpp.dir/all
 simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages.dir/all: simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_eus.dir/all
 simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages.dir/all: simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_nodejs.dir/all
 simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages.dir/all: simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_lisp.dir/all
+simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages.dir/all: simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/all
 	$(MAKE) -f simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages.dir/build.make simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages.dir/depend
 	$(MAKE) -f simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages.dir/build.make simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/david/radtest_ws/build/CMakeFiles --progress-num= "Built target radiation_layer_generate_messages"
@@ -3937,60 +3984,6 @@ map_msgs_generate_messages_cpp: simple_radiation_layer/CMakeFiles/map_msgs_gener
 simple_radiation_layer/CMakeFiles/map_msgs_generate_messages_cpp.dir/clean:
 	$(MAKE) -f simple_radiation_layer/CMakeFiles/map_msgs_generate_messages_cpp.dir/build.make simple_radiation_layer/CMakeFiles/map_msgs_generate_messages_cpp.dir/clean
 .PHONY : simple_radiation_layer/CMakeFiles/map_msgs_generate_messages_cpp.dir/clean
-
-#=============================================================================
-# Target rules for target simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir
-
-# All Build rule for target.
-simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/all: exploration_pkg/CMakeFiles/std_msgs_generate_messages_py.dir/all
-	$(MAKE) -f simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/build.make simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/depend
-	$(MAKE) -f simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/build.make simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/david/radtest_ws/build/CMakeFiles --progress-num= "Built target radiation_layer_generate_messages_py"
-.PHONY : simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/all
-
-# Build rule for subdir invocation for target.
-simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/david/radtest_ws/build/CMakeFiles 0
-	$(MAKE) -f CMakeFiles/Makefile2 simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/david/radtest_ws/build/CMakeFiles 0
-.PHONY : simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/rule
-
-# Convenience name for target.
-radiation_layer_generate_messages_py: simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/rule
-
-.PHONY : radiation_layer_generate_messages_py
-
-# clean rule for target.
-simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/clean:
-	$(MAKE) -f simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/build.make simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/clean
-.PHONY : simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/clean
-
-#=============================================================================
-# Target rules for target simple_radiation_layer/CMakeFiles/_catkin_empty_exported_target.dir
-
-# All Build rule for target.
-simple_radiation_layer/CMakeFiles/_catkin_empty_exported_target.dir/all:
-	$(MAKE) -f simple_radiation_layer/CMakeFiles/_catkin_empty_exported_target.dir/build.make simple_radiation_layer/CMakeFiles/_catkin_empty_exported_target.dir/depend
-	$(MAKE) -f simple_radiation_layer/CMakeFiles/_catkin_empty_exported_target.dir/build.make simple_radiation_layer/CMakeFiles/_catkin_empty_exported_target.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/david/radtest_ws/build/CMakeFiles --progress-num= "Built target _catkin_empty_exported_target"
-.PHONY : simple_radiation_layer/CMakeFiles/_catkin_empty_exported_target.dir/all
-
-# Build rule for subdir invocation for target.
-simple_radiation_layer/CMakeFiles/_catkin_empty_exported_target.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/david/radtest_ws/build/CMakeFiles 0
-	$(MAKE) -f CMakeFiles/Makefile2 simple_radiation_layer/CMakeFiles/_catkin_empty_exported_target.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/david/radtest_ws/build/CMakeFiles 0
-.PHONY : simple_radiation_layer/CMakeFiles/_catkin_empty_exported_target.dir/rule
-
-# Convenience name for target.
-_catkin_empty_exported_target: simple_radiation_layer/CMakeFiles/_catkin_empty_exported_target.dir/rule
-
-.PHONY : _catkin_empty_exported_target
-
-# clean rule for target.
-simple_radiation_layer/CMakeFiles/_catkin_empty_exported_target.dir/clean:
-	$(MAKE) -f simple_radiation_layer/CMakeFiles/_catkin_empty_exported_target.dir/build.make simple_radiation_layer/CMakeFiles/_catkin_empty_exported_target.dir/clean
-.PHONY : simple_radiation_layer/CMakeFiles/_catkin_empty_exported_target.dir/clean
 
 #=============================================================================
 # Target rules for target simple_radiation_layer/CMakeFiles/costmap_2d_generate_messages_lisp.dir
@@ -4315,6 +4308,33 @@ radiation_layer_gennodejs: simple_radiation_layer/CMakeFiles/radiation_layer_gen
 simple_radiation_layer/CMakeFiles/radiation_layer_gennodejs.dir/clean:
 	$(MAKE) -f simple_radiation_layer/CMakeFiles/radiation_layer_gennodejs.dir/build.make simple_radiation_layer/CMakeFiles/radiation_layer_gennodejs.dir/clean
 .PHONY : simple_radiation_layer/CMakeFiles/radiation_layer_gennodejs.dir/clean
+
+#=============================================================================
+# Target rules for target simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir
+
+# All Build rule for target.
+simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/all: exploration_pkg/CMakeFiles/std_msgs_generate_messages_py.dir/all
+	$(MAKE) -f simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/build.make simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/depend
+	$(MAKE) -f simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/build.make simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/david/radtest_ws/build/CMakeFiles --progress-num= "Built target radiation_layer_generate_messages_py"
+.PHONY : simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/all
+
+# Build rule for subdir invocation for target.
+simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/david/radtest_ws/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/david/radtest_ws/build/CMakeFiles 0
+.PHONY : simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/rule
+
+# Convenience name for target.
+radiation_layer_generate_messages_py: simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/rule
+
+.PHONY : radiation_layer_generate_messages_py
+
+# clean rule for target.
+simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/clean:
+	$(MAKE) -f simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/build.make simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/clean
+.PHONY : simple_radiation_layer/CMakeFiles/radiation_layer_generate_messages_py.dir/clean
 
 #=============================================================================
 # Target rules for target simple_radiation_layer/CMakeFiles/radiation_layer_gencfg.dir

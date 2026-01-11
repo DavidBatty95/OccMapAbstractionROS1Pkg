@@ -19,7 +19,7 @@ add_custom_target(gazebo_radiation_plugins_generate_messages ALL)
 
 get_filename_component(_filename "/home/david/radtest_ws/src/gazebo_radiation_plugin/msg/Simulated_Radiation_Msg.msg" NAME_WE)
 add_custom_target(_gazebo_radiation_plugins_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "gazebo_radiation_plugins" "/home/david/radtest_ws/src/gazebo_radiation_plugin/msg/Simulated_Radiation_Msg.msg" "geometry_msgs/Point:geometry_msgs/Quaternion:std_msgs/Header:geometry_msgs/Pose"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "gazebo_radiation_plugins" "/home/david/radtest_ws/src/gazebo_radiation_plugin/msg/Simulated_Radiation_Msg.msg" "std_msgs/Header:geometry_msgs/Pose:geometry_msgs/Point:geometry_msgs/Quaternion"
 )
 
 get_filename_component(_filename "/home/david/radtest_ws/src/gazebo_radiation_plugin/srv/EnvironmentEvolver.srv" NAME_WE)
@@ -61,7 +61,7 @@ add_custom_target(_gazebo_radiation_plugins_generate_messages_check_deps_${_file
 _generate_msg_cpp(gazebo_radiation_plugins
   "/home/david/radtest_ws/src/gazebo_radiation_plugin/msg/Simulated_Radiation_Msg.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/gazebo_radiation_plugins
 )
 
@@ -142,7 +142,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS gazebo_radiation_plugins_generate_m
 _generate_msg_eus(gazebo_radiation_plugins
   "/home/david/radtest_ws/src/gazebo_radiation_plugin/msg/Simulated_Radiation_Msg.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/gazebo_radiation_plugins
 )
 
@@ -223,7 +223,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS gazebo_radiation_plugins_generate_m
 _generate_msg_lisp(gazebo_radiation_plugins
   "/home/david/radtest_ws/src/gazebo_radiation_plugin/msg/Simulated_Radiation_Msg.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/gazebo_radiation_plugins
 )
 
@@ -304,7 +304,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS gazebo_radiation_plugins_generate_m
 _generate_msg_nodejs(gazebo_radiation_plugins
   "/home/david/radtest_ws/src/gazebo_radiation_plugin/msg/Simulated_Radiation_Msg.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/gazebo_radiation_plugins
 )
 
@@ -385,7 +385,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS gazebo_radiation_plugins_generate_m
 _generate_msg_py(gazebo_radiation_plugins
   "/home/david/radtest_ws/src/gazebo_radiation_plugin/msg/Simulated_Radiation_Msg.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/gazebo_radiation_plugins
 )
 

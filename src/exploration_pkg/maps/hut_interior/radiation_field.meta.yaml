@@ -1,0 +1,18 @@
+final_smoothing_sigma: 0.8
+gpu_used: true
+intent: leaded_concrete_near_perfect_walls_low_air_atten_beams
+max_range_m: null
+max_value: 13771.0263671875
+min_value: 0.0
+model: soft_inv_square * exp(-mu_air*r) * exp(-mu_wall*thickness_samples) + tiny_scatter
+mu_air: 0.03
+mu_wall: 55.0
+n_ray_samples: 128
+r_soft: 0.2
+row_chunk: 160
+runtime_sec: 1.6896240711212158
+scatter_fraction: 0.03
+scatter_sigma: 3.0
+source_count: 4
+units: relative_dose_rate
+wall_cell_thickness_scale: 2.2
