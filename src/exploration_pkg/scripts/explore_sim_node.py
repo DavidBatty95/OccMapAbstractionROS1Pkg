@@ -34,6 +34,7 @@ import yaml
 from collections import deque
 
 import numpy as np
+from occmap.grid import inflate_manhattan, segment_free
 import rospy
 import rospkg
 import tf2_ros
@@ -158,7 +159,7 @@ def astar(grid, start, goal):
 # Obstacle inflation (grid-radius, BFS distance)
 # ============================================================
 
-def inflate(grid, radius_cells):
+def legacy_inflate(grid, radius_cells):
     """
     grid: uint8/bool occupancy (1=occupied)
     radius_cells: Manhattan-ish expansion in cells
@@ -192,6 +193,9 @@ def inflate(grid, radius_cells):
                     q.append((nx, ny))
     return inflated
 
+def inflate(grid, radius_cells):
+    return inflate_manhattan(grid, radius_cells)
+
 
 # ============================================================
 # Path smoothing (LOS pruning on inflated grid)
@@ -213,13 +217,9 @@ def smooth_path_los(path, occ_bool):
         j = n - 1
         # find farthest j with clear LOS
         while j > i + 1:
-            ok = True
             x0, y0 = path[i]
             x1, y1 = path[j]
-            for x, y in bresenham(x0, y0, x1, y1):
-                if occ_bool[y, x]:
-                    ok = False
-                    break
+            ok = segment_free(occ_bool, (x0, y0), (x1, y1))
             if ok:
                 break
             j -= 1
@@ -398,7 +398,7 @@ class ExploreSimNode:
     # Helpers
     # ==================================================
     def world_to_grid(self, x, y):
-        return int((x - self.origin[0]) / self.res), int((y - self.origin[1]) / self.res)
+        return math.floor((x - self.origin[0]) / self.res), math.floor((y - self.origin[1]) / self.res)
 
     def grid_to_world(self, gx, gy):
         return (

@@ -1,0 +1,6 @@
+* text=auto
+*.sh text eol=lf
+*.pgm binary
+*.npy binary
+*.png binary
+*.gif binary

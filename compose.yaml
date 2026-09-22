@@ -1,0 +1,13 @@
+services:
+  demo:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    image: occmap-research:noetic
+    init: true
+    user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - ./results:/results
+    stop_grace_period: 30s

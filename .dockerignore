@@ -1,0 +1,10 @@
+.git
+build
+devel
+install
+.vscode
+.venv
+results
+docs/media
+**/__pycache__
+**/*.pyc

@@ -1,0 +1,34 @@
+name: Verification
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  docker-research-demo:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Documentation and published evidence
+        run: python3 scripts/check_repository.py
+      - name: Build installed ROS workspace
+        run: docker build -t occmap-research:noetic -f docker/Dockerfile .
+      - name: Numerical and packaging regression tests
+        run: docker run --rm occmap-research:noetic python3 -m pytest -q tests
+      - name: Headless ROS pipeline smoke test
+        run: |
+          mkdir -p results
+          docker run --rm --user "$(id -u):$(id -g)" -v "$PWD/results:/results" \
+            occmap-research:noetic python3 scripts/run_demo.py --duration 60 --check --output /results
+      - name: Retain diagnostics even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: demo-recording
+          path: results/
+          if-no-files-found: warn

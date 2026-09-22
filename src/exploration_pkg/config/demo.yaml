@@ -1,0 +1,26 @@
+# Parameters for the reduced-resolution, holonomic 2D reference demo.
+# The legacy research policy is used unchanged apart from documented fixes.
+target_node_spacing_m: 0.65
+max_total_nodes: 1800
+max_neighbors: 8
+edge_dist_max_m: 3.0
+wall_buffer_m: 0.16
+strict_min_clearance_m: 0.18
+frontier_extra_clearance_m: 0.05
+cluster_min_size: 3
+frontier_min_denom_cells: 8
+frontier_min_goal_separation_m: 0.8
+graph_min_update_period_s: 1.0
+graph_force_rebuild_period_s: 4.0
+replan_period_s: 1.0
+goal_hold_min_s: 3.0
+enable_preplan: false
+nav_stale_reset_s: 12.0
+completion_confirm_cycles: 12
+completion_min_total_distance_m: 5.0
+radiation_weight: 1.8
+radiation_edge_weight: 0.6
+astar_rad_integral_weight: 4.0
+radiation_goal_soft_cap: 0.65
+radiation_goal_hard_cap: 0.95
+radiation_exclusion_threshold: 0.90

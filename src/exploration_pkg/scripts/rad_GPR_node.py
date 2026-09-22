@@ -23,6 +23,23 @@ Keeps all original functionality:
 import rospy
 import numpy as np
 from collections import deque
+import threading
+from functools import wraps
+from occmap.grid import geodesic_distances
+
+
+def synchronized(method):
+    @wraps(method)
+    def locked(self, *args, **kwargs):
+        with self._lock:
+            if rospy.is_shutdown():
+                return
+            try:
+                return method(self, *args, **kwargs)
+            except rospy.ROSException:
+                if not rospy.is_shutdown():
+                    raise
+    return locked
 
 from nav_msgs.msg import OccupancyGrid
 from visualization_msgs.msg import Marker, MarkerArray
@@ -83,6 +100,11 @@ class CorridorSVGP(gpytorch.models.ApproximateGP):
 class RadiationGPMapper:
     def __init__(self):
         rospy.init_node("rad_GPR_node", anonymous=False)
+        self._lock = threading.RLock()
+        seed = int(rospy.get_param('~seed', 42))
+        self.rng = np.random.default_rng(seed)
+        torch.manual_seed(seed)
+        torch.set_num_threads(max(1, int(rospy.get_param('~torch_threads', 1))))
 
         # ---------------- Topics / frames ----------------
         self.map_topic  = rospy.get_param("~map_topic", "/map")
@@ -175,17 +197,16 @@ class RadiationGPMapper:
         self.sig_pub    = rospy.Publisher("/radiation_sigma",   OccupancyGrid, queue_size=1, latch=True)
         self.marker_pub = rospy.Publisher("/radiation_markers", MarkerArray,   queue_size=1)
 
-        rospy.Subscriber(self.map_topic,  OccupancyGrid, self.map_cb,  queue_size=1)
-        rospy.Subscriber(self.meas_topic, Float32,       self.meas_cb, queue_size=300)
-
-        rospy.Timer(rospy.Duration(self.publish_period_s), self._timer)
-
         # ---------------- GP objects (lazy init) ----------------
         self.model = None
         self.likelihood = None
         self.optimizer = None
         self.mll = None
         self._feat_dim = None
+
+        rospy.Subscriber(self.map_topic, OccupancyGrid, self.map_cb, queue_size=1)
+        rospy.Subscriber(self.meas_topic, Float32, self.meas_cb, queue_size=1)
+        rospy.Timer(rospy.Duration(self.publish_period_s), self._timer)
 
         rospy.loginfo(
             "rad_GPR_node v7.1 (GPyTorch SVGP corridor-aware) running on device=%s (cuda=%s) meas_topic=%s",
@@ -196,7 +217,15 @@ class RadiationGPMapper:
     # Map
     # ======================================================
 
+    @synchronized
     def map_cb(self, msg):
+        geometry = (msg.info.width, msg.info.height, msg.info.resolution,
+                    msg.info.origin.position.x, msg.info.origin.position.y)
+        if getattr(self, '_geometry', geometry) != geometry:
+            self.global_heat = self.global_sigma = None
+            self.vox.clear()
+            self.model = None
+        self._geometry = geometry
         self.map_info = msg.info
         raw = np.asarray(msg.data, dtype=np.int16).reshape((msg.info.height, msg.info.width))
 
@@ -216,6 +245,7 @@ class RadiationGPMapper:
     # Measurements -> voxel aggregate
     # ======================================================
 
+    @synchronized
     def meas_cb(self, msg: Float32):
         """
         /sim_rad_sensor is std_msgs/Float32:
@@ -227,7 +257,9 @@ class RadiationGPMapper:
 
         # value
         try:
-            v = max(0.0, float(msg.data))
+            v = float(msg.data)
+            if not np.isfinite(v) or v < 0:
+                return
         except Exception:
             return
 
@@ -328,8 +360,8 @@ class RadiationGPMapper:
         res = info.resolution
         ox = info.origin.position.x
         oy = info.origin.position.y
-        r = int((y - oy) / res)
-        c = int((x - ox) / res)
+        r = int(np.floor((y - oy) / res))
+        c = int(np.floor((x - ox) / res))
         return r, c
 
     def _rc_to_xy(self, rc):
@@ -379,6 +411,8 @@ class RadiationGPMapper:
                     continue
                 if self.free_mask[nr, nc] < 0.5:
                     continue
+                if (nr - rr0) ** 2 + (nc - cc0) ** 2 > rad2:
+                    continue
                 reachable[nr, nc] = 1
                 q.append((nr, nc))
 
@@ -389,36 +423,10 @@ class RadiationGPMapper:
     # ======================================================
 
     def _geodesic_distmap(self, seed_r, seed_c, reachable, max_cells):
-        info = self.map_info
-        res = info.resolution
-        h, w = info.height, info.width
-
-        dist = np.full((h, w), np.inf, dtype=np.float32)
-        if reachable[seed_r, seed_c] == 0:
-            return dist
-
-        q = deque()
-        q.append((seed_r, seed_c))
-        dist[seed_r, seed_c] = 0.0
-
-        cap_m = max_cells * res
-        while q:
-            r, c = q.popleft()
-            d0 = dist[r, c]
-            if d0 > cap_m:
-                continue
-
-            for nr, nc in ((r - 1, c), (r + 1, c), (r, c - 1), (r, c + 1)):
-                if nr < 0 or nr >= h or nc < 0 or nc >= w:
-                    continue
-                if reachable[nr, nc] == 0:
-                    continue
-                nd = d0 + res
-                if nd < dist[nr, nc]:
-                    dist[nr, nc] = nd
-                    q.append((nr, nc))
-
-        return dist
+        # The Euclidean crop is already bounded. A path around a wall can be
+        # longer than the crop radius; visit the entire reachable component.
+        return geodesic_distances(reachable, (seed_r, seed_c), int(np.count_nonzero(reachable)),
+                                  self.map_info.resolution)
 
     # ======================================================
     # Pick geodesic landmarks (farthest-point sampling)
@@ -450,7 +458,7 @@ class RadiationGPMapper:
             if seed in landmarks:
                 break
             landmarks.append(seed)
-            last_dist = self._geodesic_distmap(seed[0], seed[1], reachable, max_cells)
+            last_dist = np.minimum(last_dist, self._geodesic_distmap(seed[0], seed[1], reachable, max_cells))
 
         return landmarks
 
@@ -492,7 +500,7 @@ class RadiationGPMapper:
             rc = rc[reachable[rc[:, 0], rc[:, 1]] > 0]
 
         if rc.shape[0] > self.max_query_points:
-            rc = rc[np.random.choice(rc.shape[0], self.max_query_points, replace=False)]
+            rc = rc[self.rng.choice(rc.shape[0], self.max_query_points, replace=False)]
 
         return rc, reachable, rr, cc, rad_cells
 
@@ -514,7 +522,7 @@ class RadiationGPMapper:
             vv = v_samples[idx]
         else:
             if xy_samples.shape[0] > 150:
-                sel = np.random.choice(xy_samples.shape[0], 150, replace=False)
+                sel = self.rng.choice(xy_samples.shape[0], 150, replace=False)
                 xy_s = xy_samples[sel]
                 v_s  = v_samples[sel]
             else:
@@ -559,7 +567,9 @@ class RadiationGPMapper:
         scale = max(self.geo_feature_scale_m, 1e-3)
         for dm in distmaps:
             d = dm[rc[:, 0], rc[:, 1]].astype(np.float32)
-            d = np.where(np.isfinite(d), d, 1e6).astype(np.float32)
+            finite = dm[np.isfinite(dm)]
+            cap = float(finite.max() + self.map_info.resolution) if finite.size else 1.0
+            d = np.where(np.isfinite(d), d, cap).astype(np.float32)
             feats.append((d[:, None] / scale).astype(np.float32))
         return np.hstack(feats).astype(np.float32)
 
@@ -568,8 +578,8 @@ class RadiationGPMapper:
     # ======================================================
 
     def _ensure_model(self, feat_dim: int, inducing_X: np.ndarray):
-        if self.model is not None and self._feat_dim == feat_dim:
-            return
+        # Local landmarks and target standardisation change at each fit. Reusing
+        # a variational posterior in a different feature basis is invalid.
 
         inducing = torch.from_numpy(inducing_X).to(self.device).float()
         self.model = CorridorSVGP(inducing, nu=self.nu).to(self.device)
@@ -595,10 +605,9 @@ class RadiationGPMapper:
     def _clamp_hypers(self):
         try:
             with torch.no_grad():
-                ls = self.model.covar_module.base_kernel.lengthscale
-                ls.clamp_(min=float(self.lengthscale_min), max=float(self.lengthscale_max))
-                nz = self.likelihood.noise
-                nz.clamp_(min=float(self.noise_min), max=float(self.noise_max))
+                kernel = self.model.covar_module.base_kernel
+                kernel.lengthscale = kernel.lengthscale.clamp(self.lengthscale_min, self.lengthscale_max)
+                self.likelihood.noise = self.likelihood.noise.clamp(self.noise_min, self.noise_max)
         except Exception:
             pass
 
@@ -606,6 +615,7 @@ class RadiationGPMapper:
     # Timer loop
     # ======================================================
 
+    @synchronized
     def _timer(self, _):
         if self.map_info is None or self.free_mask is None or self.global_heat is None:
             return
@@ -637,7 +647,8 @@ class RadiationGPMapper:
         # Training reachable region (slightly larger)
         res = self.map_info.resolution
         train_cells = int(max(0.5, self.local_radius_m + self.local_margin_m) / res)
-        if reachable is None and self.use_reachable_mask:
+        query_reachable = reachable
+        if self.use_reachable_mask:
             reachable = self._reachable_within_radius(rr0, cc0, train_cells)
             if reachable is None:
                 return
@@ -668,12 +679,10 @@ class RadiationGPMapper:
             y_train.append(float(v))
 
         if len(y_train) < 8:
-            # Keep radiation alive using IDW-only field
-            idw = self._idw_patch(xy_q, X_train_xy, y_train)
-            scale = max(float(self.global_scale), 1e-3)
-            patch = self._contrast(idw / scale)
-            mean = patch
-            std = np.zeros_like(patch)
+            # Keep the previous estimate until enough local samples are available.
+            # The former fallback passed lists to an ndarray API, then fell
+            # through to GP training even when there were no samples.
+            return
 
         X_train_xy = np.asarray(X_train_xy, dtype=np.float32)
         y_train = np.asarray(y_train, dtype=np.float32)
@@ -687,7 +696,7 @@ class RadiationGPMapper:
         M = min(int(self.inducing_points), X_train.shape[0])
         if M < 8:
             return
-        sel = np.random.choice(X_train.shape[0], M, replace=False)
+        sel = self.rng.choice(X_train.shape[0], M, replace=False)
         Z = X_train[sel].astype(np.float32)
 
         # Ensure / refresh model if needed
@@ -766,20 +775,20 @@ class RadiationGPMapper:
         patch_sig[rc_q[:, 0], rc_q[:, 1]] = np.clip(std / denom, 0.0, 1.0)
 
         # Fill reachable holes using IDW
-        if reachable is not None:
-            hole_mask = (patch_grid == 0) & (reachable > 0)
+        if query_reachable is not None:
+            hole_mask = (patch_grid == 0) & (query_reachable > 0)
         else:
-            hole_mask = (patch_grid == 0) & (self.free_mask > 0)
+            hole_mask = np.zeros_like(self.free_mask, dtype=bool)
 
         if np.any(hole_mask):
             rc_holes = np.argwhere(hole_mask)
             xy_holes = self._rc_to_xy(rc_holes)
             idw_fill = self._idw_patch(xy_holes, X_train_xy, y_train) / scale
-            patch_grid[hole_mask] = idw_fill
+            patch_grid[hole_mask] = self._contrast(idw_fill) ** self.gamma
 
-        # Physical diffusion (radiation spreads in air)
-        if gaussian_filter is not None:
-            sigma_cells = max(1.0, self.local_radius_m / self.map_info.resolution / 12.0)
+        # Optional visual smoothing is not a radiation transport model.
+        if gaussian_filter is not None and self.smooth_sigma_cells > 0:
+            sigma_cells = self.smooth_sigma_cells
             patch_grid = gaussian_filter(patch_grid, sigma=sigma_cells)
             if self.publish_sigma:
                 patch_sig = gaussian_filter(patch_sig, sigma=max(1.0, 0.7 * sigma_cells))
@@ -861,7 +870,7 @@ class RadiationGPMapper:
         m.scale.x = m.scale.y = m.scale.z = 0.16
 
         if xy.shape[0] > 2500:
-            sel = np.random.choice(xy.shape[0], 2500, replace=False)
+            sel = self.rng.choice(xy.shape[0], 2500, replace=False)
             xy = xy[sel]
             vv = vv[sel]
 

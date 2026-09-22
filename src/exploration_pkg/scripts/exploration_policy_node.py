@@ -21,6 +21,7 @@ import heapq
 from collections import deque, defaultdict
 
 import numpy as np
+from occmap.grid import clearance
 
 import rospy
 from std_msgs.msg import Bool, Float32, String
@@ -76,8 +77,8 @@ def hypot2(dx, dy):
     return math.sqrt(dx * dx + dy * dy)
 
 def world_to_grid(x, y, origin_x, origin_y, res):
-    gx = int((x - origin_x) / res)
-    gy = int((y - origin_y) / res)
+    gx = math.floor((x - origin_x) / res)
+    gy = math.floor((y - origin_y) / res)
     return gx, gy
 
 def grid_to_world(gx, gy, origin_x, origin_y, res):
@@ -112,7 +113,7 @@ def bresenham(x0, y0, x1, y1):
             err += dx
             y += sy
 
-def fast_chamfer_distance(obstacle_mask):
+def legacy_chamfer_distance(obstacle_mask):
     """
     Fast-ish 2-pass chamfer distance in grid cells (not meters).
     obstacle_mask True => distance 0.
@@ -159,6 +160,11 @@ def fast_chamfer_distance(obstacle_mask):
             row[x] = best
 
     return dist
+
+def fast_chamfer_distance(obstacle_mask):
+    # Exact Euclidean clearance is conservative relative to the old octile
+    # approximation and avoids two Python loops over every cell on each map.
+    return clearance(obstacle_mask)
 
 def compute_yaw_from_quat(q):
     _, _, yaw = euler_from_quaternion([q.x, q.y, q.z, q.w])

@@ -1,0 +1,28 @@
+<launch>
+  <arg name="map" default="reactor_room_sim"/>
+  <arg name="factor" default="5"/>
+  <arg name="use_radiation" default="true"/>
+  <arg name="seed" default="42"/>
+  <node pkg="exploration_pkg" type="research_demo_node.py" name="research_demo" output="screen" required="true">
+    <param name="map" value="$(arg map)"/>
+    <param name="factor" value="$(arg factor)"/>
+  </node>
+  <node pkg="exploration_pkg" type="exploration_policy_node.py" name="exploration_policy" output="screen" required="true">
+    <rosparam command="load" file="$(find exploration_pkg)/config/demo.yaml"/>
+    <param name="use_radiation" value="$(arg use_radiation)"/>
+  </node>
+  <node if="$(arg use_radiation)" pkg="exploration_pkg" type="rad_GPR_node.py" name="rad_GPR_node" output="screen" required="true">
+    <param name="force_cpu" value="true"/>
+    <param name="seed" value="$(arg seed)"/>
+    <param name="torch_threads" value="1"/>
+    <param name="gp_refit_period_s" value="3.0"/>
+    <param name="train_steps" value="8"/>
+    <param name="inducing_points" value="32"/>
+    <param name="local_radius_m" value="4.0"/>
+    <param name="local_margin_m" value="1.0"/>
+    <param name="coarse_factor" value="3"/>
+    <param name="max_query_points" value="1200"/>
+    <param name="abs_scale_uSv" value="300.0"/>
+    <param name="smooth_sigma_cells" value="0.0"/>
+  </node>
+</launch>

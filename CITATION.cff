@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "Please cite this software and identify the commit, configuration and map used in your experiments."
+title: "OccMap: Occupancy-map abstraction and radiation-aware exploration"
+type: software
+authors:
+  - family-names: Batty
+    given-names: David
+    affiliation: University of Liverpool
+repository-code: "https://github.com/DavidBatty95/OccMapAbstractionROS1Pkg"
+license: BSD-3-Clause
+keywords:
+  - robotics
+  - autonomous exploration
+  - occupancy grids
+  - radiation mapping
+  - ROS
