@@ -1,24 +1,23 @@
-# Catkin build products
-build/
-devel/
+# Catkin build products and local scaffolding
+/build/
+/devel/
+/install/
+/src/CMakeLists.txt
 
-# ROS logs
-.log
-logs/
-
-# Gazebo junk
+# Local experiments (published evidence lives under docs/results)
+/results/
 *.log
+!docs/results/**/ros.log
+logs/
 *.state
-gazebo/
-.world~ 
+*.world~
 
-# Python
+# Python, editors and OS
+.venv/
 __pycache__/
 *.pyc
-
-# Editors
+*.egg-info/
+.pytest_cache/
 .vscode/
 .idea/
-
-# OS
 .DS_Store

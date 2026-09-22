@@ -1,0 +1,15 @@
+# Optional sources for restoring the historical Gazebo integration.
+# Not required by the containerised 2D reference demo.
+repositories:
+  gazebo_radiation_plugin:
+    type: git
+    url: https://github.com/EEEManchester/gazebo_radiation_plugin.git
+    version: 5c75bf18d1de9a70f4e8f21baaef9e09736dfd79
+  simple_radiation_layer:
+    type: git
+    url: https://github.com/EEEManchester/simple_radiation_layer.git
+    version: 931d71d7b0853d1fd10f6e81b7e2ab83ebef28fd
+  unitree_ros:
+    type: git
+    url: https://github.com/unitreerobotics/unitree_ros.git
+    version: 29cc27f7578e010165042e1fe45cc18f3a4dd2ca

@@ -1,0 +1,9 @@
+{
+  "source_commit": "ea6e360be177ff992091eeab21a9b4103d208593",
+  "status": "Original gitlinks had no .gitmodules URLs. All three upstream commit URLs were verified during the refresh; see legacy.repos. Custom Gazebo experiment assets and launch integration are not reconstructed.",
+  "gitlinks": {
+    "src/gazebo_radiation_plugin": "5c75bf18d1de9a70f4e8f21baaef9e09736dfd79",
+    "src/simple_radiation_layer": "931d71d7b0853d1fd10f6e81b7e2ab83ebef28fd",
+    "src/unitree_ros": "29cc27f7578e010165042e1fe45cc18f3a4dd2ca"
+  }
+}
