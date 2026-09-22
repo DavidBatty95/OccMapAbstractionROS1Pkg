@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.29",
+  "processor": "x86_64",
+  "numpy": "1.24.4",
+  "repeats": 3,
+  "results": [
+    {
+      "map": "hut_interior",
+      "shape": [
+        267,
+        579
+      ],
+      "kernel": "clearance",
+      "before": {
+        "seconds": [
+          1.1315606630014372,
+          1.1399612370005343,
+          1.1104465180033003
+        ],
+        "median_s": 1.1315606630014372
+      },
+      "after": {
+        "seconds": [
+          0.0066680450036074035,
+          0.004809869002201594,
+          0.005407447002653498
+        ],
+        "median_s": 0.005407447002653498
+      },
+      "speedup": 209.2596862153558,
+      "max_metric_difference_cells": 8.609466552734375,
+      "max_increase_cells": 0.00069427490234375,
+      "semantics": "octile approximation (diagonal 1.4142) -> exact Euclidean"
+    },
+    {
+      "map": "hut_interior",
+      "shape": [
+        267,
+        579
+      ],
+      "kernel": "Manhattan inflation, radius 5",
+      "before": {
+        "seconds": [
+          0.039064195996616036,
+          0.03807067800516961,
+          0.03836074500577524
+        ],
+        "median_s": 0.03836074500577524
+      },
+      "after": {
+        "seconds": [
+          0.00106181299634045,
+          0.0008903220004867762,
+          0.0008893199992598966
+        ],
+        "median_s": 0.0008903220004867762
+      },
+      "speedup": 43.08637210447661,
+      "semantics": "identical masks"
+    },
+    {
+      "map": "reactor_room_sim",
+      "shape": [
+        992,
+        992
+      ],
+      "kernel": "clearance",
+      "before": {
+        "seconds": [
+          5.951219515998673,
+          5.884327015999588,
+          5.748824893998972
+        ],
+        "median_s": 5.884327015999588
+      },
+      "after": {
+        "seconds": [
+          0.029659135994734243,
+          0.026189321994024795,
+          0.029683509994356427
+        ],
+        "median_s": 0.029659135994734243
+      },
+      "speedup": 198.39846369915517,
+      "max_metric_difference_cells": 12.69622802734375,
+      "max_increase_cells": 0.0012969970703125,
+      "semantics": "octile approximation (diagonal 1.4142) -> exact Euclidean"
+    },
+    {
+      "map": "reactor_room_sim",
+      "shape": [
+        992,
+        992
+      ],
+      "kernel": "Manhattan inflation, radius 5",
+      "before": {
+        "seconds": [
+          0.3811522899995907,
+          0.369915936003963,
+          0.37006130699592177
+        ],
+        "median_s": 0.37006130699592177
+      },
+      "after": {
+        "seconds": [
+          0.005239215002802666,
+          0.005035462003434077,
+          0.005034922993218061
+        ],
+        "median_s": 0.005035462003434077
+      },
+      "speedup": 73.49103354241336,
+      "semantics": "identical masks"
+    }
+  ],
+  "recorded_at": "2026-09-22T00:33:32.018314+00:00",
+  "cpu_model": "13th Gen Intel(R) Core(TM) i7-13800H",
+  "files_sha256": {
+    "scripts/benchmark_grid.py": "8d501988f098748226006a2b83341aaddb801d3721543abe7d3507e4c61374c0",
+    "src/exploration_pkg/python/occmap/grid.py": "99a151248fc22b097456b925c9654684c8d49a70e93ce4bd2e1d82c6b92f2a6a",
+    "src/exploration_pkg/scripts/exploration_policy_node.py": "4ae9ec5abe719b439e7c7614eb7144a39d4ca93b29ef2b118936595698a0fe05",
+    "src/exploration_pkg/scripts/explore_sim_node.py": "4b55bbd7e4293fdfc5a148d89a37e953e7520ceca71c6e777ca0d403c8828973"
+  },
+  "scope": "Kernel microbenchmark, not end-to-end exploration speedup; same process, serial timings."
+}

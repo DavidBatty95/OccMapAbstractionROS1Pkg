@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="270" viewBox="0 0 1200 270" role="img" aria-labelledby="title desc">
+  <title id="title">ROS reference demo architecture</title>
+  <desc id="desc">Truth map and dose field feed a sensor simulator. Observed occupancy and point measurements feed the policy and estimator. The resulting corridor is executed by the simulator; observations and metrics are recorded in a browser dashboard.</desc>
+  <rect width="1200" height="270" rx="16" fill="#0c1424"/>
+  <g font-family="sans-serif" fill="#e7edf6" text-anchor="middle">
+    <g fill="#192a40" stroke="#365569"><rect x="25" y="65" width="245" height="100" rx="10"/><rect x="325" y="65" width="245" height="100" rx="10"/><rect x="625" y="65" width="245" height="100" rx="10"/><rect x="925" y="65" width="245" height="100" rx="10"/></g>
+    <g font-size="21"><text x="147" y="100">2D sensor simulator</text><text x="447" y="100">Graph + SVGP</text><text x="747" y="100">Exploration policy</text><text x="1047" y="100">Browser + recording</text></g>
+    <g font-size="16" fill="#9bb3ce"><text x="147" y="132">PGM + relative dose field</text><text x="447" y="132">Online observations only</text><text x="747" y="132">Frontier scoring + A*</text><text x="1047" y="132">PNG · GIF · CSV · JSON</text></g>
+    <text x="600" y="32" font-size="18" fill="#52ded0">SELF-CONTAINED NOETIC CONTAINER / SCHEMATIC</text>
+    <text x="447" y="229" font-size="16" fill="#ffa95e">Corridor feedback → collision-checked holonomic execution</text>
+  </g>
+  <g fill="none" stroke="#52ded0" stroke-width="3"><path d="M273 115H317m-8-7 8 7-8 7M573 115H617m-8-7 8 7-8 7M873 115H917m-8-7 8 7-8 7"/></g>
+  <path d="M747 170V195H147V172m-7 8 7-8 7 8" fill="none" stroke="#ffa95e" stroke-width="2"/>
+</svg>

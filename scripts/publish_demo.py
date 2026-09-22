@@ -21,12 +21,14 @@ def main():
     results = ROOT / 'docs/results' / args.name
     media.mkdir(parents=True, exist_ok=True)
     results.mkdir(parents=True, exist_ok=True)
-    for name in ('manifest.json', 'summary.json', 'metrics.csv', 'ros.log'):
+    for name in ('manifest.json', 'summary.json', 'ros.log'):
         shutil.copyfile(args.run / name, results / name)
+    (results / 'metrics.csv').write_bytes((args.run / 'metrics.csv').read_bytes().replace(b'\r\n', b'\n'))
     for source, destination in [('demo.gif', args.name + '.gif'), ('live.png', args.name + '.png')]:
         shutil.copyfile(args.run / source, media / destination)
     manifest_path = results / 'manifest.json'
     manifest = json.loads(manifest_path.read_text())
+    manifest['published_csv_line_endings'] = 'LF (values unchanged)'
     manifest['published_artifacts_sha256'] = {
         'docs/media/' + args.name + '.gif': hashlib.sha256((media / (args.name + '.gif')).read_bytes()).hexdigest(),
         'docs/results/' + args.name + '/metrics.csv': hashlib.sha256((results / 'metrics.csv').read_bytes()).hexdigest(),

@@ -1,0 +1,182 @@
+... logging to /tmp/.ros/log/8911b524-b61e-11f1-a2c6-721ddbfca8a1/roslaunch-bd564019ada6-408.log
+Checking log directory for disk usage. This may take a while.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is <1GB.
+]2;roscore
+[1mstarted roslaunch server http://bd564019ada6:37915/[0m
+ros_comm version 1.17.4
+
+
+SUMMARY
+========
+
+PARAMETERS
+ * /rosdistro: noetic
+ * /rosversion: 1.17.4
+
+NODES
+
+auto-starting new master
+[1mprocess[master]: started with pid [416][0m
+[1mROS_MASTER_URI=http://bd564019ada6:11311/[0m
+]2;roscore http://bd564019ada6:11311/
+[1msetting /run_id to 8911b524-b61e-11f1-a2c6-721ddbfca8a1[0m
+[1mprocess[rosout-1]: started with pid [429][0m
+started core service [/rosout]
+... logging to /tmp/.ros/log/8911b524-b61e-11f1-a2c6-721ddbfca8a1/roslaunch-bd564019ada6-439.log
+Checking log directory for disk usage. This may take a while.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is <1GB.
+]2;/opt/occmap/install/share/exploration_pkg/launch/demo.launch
+[1mstarted roslaunch server http://bd564019ada6:39041/[0m
+
+SUMMARY
+========
+
+PARAMETERS
+ * /exploration_policy/astar_rad_integral_weight: 4.0
+ * /exploration_policy/cluster_min_size: 3
+ * /exploration_policy/completion_confirm_cycles: 12
+ * /exploration_policy/completion_min_total_distance_m: 5.0
+ * /exploration_policy/edge_dist_max_m: 3.0
+ * /exploration_policy/enable_preplan: False
+ * /exploration_policy/frontier_extra_clearance_m: 0.05
+ * /exploration_policy/frontier_min_denom_cells: 8
+ * /exploration_policy/frontier_min_goal_separation_m: 0.8
+ * /exploration_policy/goal_hold_min_s: 3.0
+ * /exploration_policy/graph_force_rebuild_period_s: 4.0
+ * /exploration_policy/graph_min_update_period_s: 1.0
+ * /exploration_policy/max_neighbors: 8
+ * /exploration_policy/max_total_nodes: 1800
+ * /exploration_policy/nav_stale_reset_s: 12.0
+ * /exploration_policy/radiation_edge_weight: 0.6
+ * /exploration_policy/radiation_exclusion_threshold: 0.9
+ * /exploration_policy/radiation_goal_hard_cap: 0.95
+ * /exploration_policy/radiation_goal_soft_cap: 0.65
+ * /exploration_policy/radiation_weight: 1.8
+ * /exploration_policy/replan_period_s: 1.0
+ * /exploration_policy/strict_min_clearance_m: 0.18
+ * /exploration_policy/target_node_spacing_m: 0.65
+ * /exploration_policy/use_radiation: False
+ * /exploration_policy/wall_buffer_m: 0.16
+ * /research_demo/factor: 5
+ * /research_demo/map: reactor_room_sim
+ * /rosdistro: noetic
+ * /rosversion: 1.17.4
+
+NODES
+  /
+    exploration_policy (exploration_pkg/exploration_policy_node.py)
+    research_demo (exploration_pkg/research_demo_node.py)
+
+[1mROS_MASTER_URI=http://localhost:11311[0m
+]2;/opt/occmap/install/share/exploration_pkg/launch/demo.launch http://localhost:11311
+[1mprocess[research_demo-1]: started with pid [454][0m
+[1mprocess[exploration_policy-2]: started with pid [455][0m
+[INFO] [1790037770.429000]: ExplorerPolicy v20 COMPLETE started: map_frame='map' base_frame='base_link' strict=True los_precheck=False clustering=True kdtree=True use_radiation=False rad_caps(soft=0.65 hard=0.95) rad_excl=True
+[INFO] [1790037770.684206]: [MISSION] Start pose recorded (MAP): (-0.05, -0.05, 0.0 deg)
+[INFO] [1790037770.697043]: [GRAPH] nodes=47 edges=219 build=0.011s frame=map
+[INFO] [1790037771.723343]: [GRAPH] nodes=64 edges=289 build=0.022s frame=map
+[INFO] [1790037772.944907]: [GRAPH] nodes=67 edges=299 build=0.015s frame=map
+[INFO] [1790037773.939612]: [GRAPH] nodes=72 edges=321 build=0.010s frame=map
+[INFO] [1790037775.198694]: [GRAPH] nodes=77 edges=345 build=0.019s frame=map
+[INFO] [1790037776.219505]: [GRAPH] nodes=79 edges=353 build=0.040s frame=map
+[INFO] [1790037777.206976]: [GRAPH] nodes=86 edges=383 build=0.027s frame=map
+[INFO] [1790037778.237616]: [GRAPH] nodes=89 edges=398 build=0.058s frame=map
+[INFO] [1790037779.473472]: [GRAPH] nodes=97 edges=432 build=0.043s frame=map
+[INFO] [1790037780.714689]: [GRAPH] nodes=105 edges=466 build=0.035s frame=map
+[INFO] [1790037781.733737]: [GRAPH] nodes=114 edges=508 build=0.048s frame=map
+[INFO] [1790037782.966357]: [GRAPH] nodes=120 edges=535 build=0.036s frame=map
+[INFO] [1790037784.248189]: [GRAPH] nodes=125 edges=551 build=0.066s frame=map
+[INFO] [1790037785.250528]: [GRAPH] nodes=133 edges=589 build=0.056s frame=map
+[INFO] [1790037786.476640]: [GRAPH] nodes=142 edges=631 build=0.047s frame=map
+[INFO] [1790037787.508652]: [GRAPH] nodes=144 edges=640 build=0.079s frame=map
+[INFO] [1790037788.482381]: [GRAPH] nodes=148 edges=660 build=0.052s frame=map
+[INFO] [1790037789.776404]: [GRAPH] nodes=152 edges=678 build=0.070s frame=map
+[INFO] [1790037790.973365]: [GRAPH] nodes=152 edges=678 build=0.044s frame=map
+[INFO] [1790037791.984654]: [GRAPH] nodes=152 edges=678 build=0.054s frame=map
+[INFO] [1790037793.241322]: [GRAPH] nodes=153 edges=681 build=0.061s frame=map
+[INFO] [1790037794.239335]: [GRAPH] nodes=154 edges=685 build=0.059s frame=map
+[INFO] [1790037795.508259]: [GRAPH] nodes=159 edges=708 build=0.078s frame=map
+[INFO] [1790037796.774566]: [GRAPH] nodes=166 edges=741 build=0.094s frame=map
+[INFO] [1790037797.992381]: [GRAPH] nodes=170 edges=760 build=0.063s frame=map
+[INFO] [1790037798.984409]: [GRAPH] nodes=172 edges=769 build=0.055s frame=map
+[INFO] [1790037799.988491]: [GRAPH] nodes=179 edges=797 build=0.058s frame=map
+[INFO] [1790037801.243572]: [GRAPH] nodes=182 edges=808 build=0.064s frame=map
+[INFO] [1790037802.280538]: [GRAPH] nodes=182 edges=808 build=0.069s frame=map
+[INFO] [1790037803.492393]: [GRAPH] nodes=185 edges=824 build=0.062s frame=map
+[INFO] [1790037804.491457]: [GRAPH] nodes=188 edges=834 build=0.061s frame=map
+[INFO] [1790037805.779042]: [GRAPH] nodes=190 edges=843 build=0.082s frame=map
+[INFO] [1790037806.763698]: [GRAPH] nodes=192 edges=852 build=0.061s frame=map
+[INFO] [1790037808.010609]: [GRAPH] nodes=197 edges=877 build=0.081s frame=map
+[INFO] [1790037809.013512]: [GRAPH] nodes=202 edges=900 build=0.083s frame=map
+[INFO] [1790037810.240365]: [GRAPH] nodes=212 edges=942 build=0.061s frame=map
+[INFO] [1790037811.245742]: [GRAPH] nodes=218 edges=968 build=0.060s frame=map
+[INFO] [1790037812.543674]: [GRAPH] nodes=224 edges=994 build=0.113s frame=map
+[INFO] [1790037813.768564]: [GRAPH] nodes=233 edges=1032 build=0.075s frame=map
+[INFO] [1790037815.001534]: [GRAPH] nodes=239 edges=1056 build=0.072s frame=map
+[INFO] [1790037816.036669]: [GRAPH] nodes=242 edges=1071 build=0.104s frame=map
+[INFO] [1790037817.266294]: [GRAPH] nodes=246 edges=1087 build=0.071s frame=map
+[INFO] [1790037818.329144]: [GRAPH] nodes=247 edges=1092 build=0.117s frame=map
+[INFO] [1790037819.501615]: [GRAPH] nodes=247 edges=1092 build=0.072s frame=map
+[INFO] [1790037823.522104]: [GRAPH] nodes=247 edges=1092 build=0.092s frame=map
+[INFO] [1790037827.797125]: [GRAPH] nodes=247 edges=1092 build=0.106s frame=map
+[INFO] [1790037829.566723]: [GRAPH] nodes=247 edges=1092 build=0.136s frame=map
+[INFO] [1790037830.802643]: [GRAPH] nodes=250 edges=1108 build=0.122s frame=map
+[INFO] [1790037832.021680]: [GRAPH] nodes=254 edges=1127 build=0.092s frame=map
+[INFO] [1790037833.015011]: [GRAPH] nodes=258 edges=1146 build=0.085s frame=map
+[INFO] [1790037834.046737]: [GRAPH] nodes=260 edges=1153 build=0.115s frame=map
+[INFO] [1790037835.291338]: [GRAPH] nodes=261 edges=1156 build=0.109s frame=map
+[INFO] [1790037836.523957]: [GRAPH] nodes=271 edges=1196 build=0.094s frame=map
+[INFO] [1790037837.547757]: [GRAPH] nodes=273 edges=1202 build=0.118s frame=map
+[INFO] [1790037838.791585]: [GRAPH] nodes=277 edges=1215 build=0.112s frame=map
+[INFO] [1790037839.847835]: [GRAPH] nodes=280 edges=1225 build=0.154s frame=map
+[INFO] [1790037841.048835]: [GRAPH] nodes=280 edges=1225 build=0.119s frame=map
+[INFO] [1790037845.072679]: [GRAPH] nodes=280 edges=1225 build=0.143s frame=map
+[INFO] [1790037846.288171]: [GRAPH] nodes=284 edges=1242 build=0.103s frame=map
+[INFO] [1790037847.563949]: [GRAPH] nodes=288 edges=1255 build=0.134s frame=map
+[INFO] [1790037848.817563]: [GRAPH] nodes=291 edges=1266 build=0.138s frame=map
+[INFO] [1790037849.778271]: [GRAPH] nodes=293 edges=1274 build=0.098s frame=map
+[INFO] [1790037850.778648]: [GRAPH] nodes=294 edges=1276 build=0.098s frame=map
+[INFO] [1790037851.802380]: [GRAPH] nodes=295 edges=1281 build=0.102s frame=map
+[INFO] [1790037853.032697]: [GRAPH] nodes=302 edges=1315 build=0.103s frame=map
+[INFO] [1790037854.352014]: [GRAPH] nodes=308 edges=1339 build=0.167s frame=map
+[INFO] [1790037855.559230]: [GRAPH] nodes=316 edges=1377 build=0.129s frame=map
+[INFO] [1790037856.812483]: [GRAPH] nodes=322 edges=1404 build=0.129s frame=map
+[INFO] [1790037857.881574]: [GRAPH] nodes=326 edges=1421 build=0.191s frame=map
+[INFO] [1790037859.050577]: [GRAPH] nodes=337 edges=1467 build=0.121s frame=map
+[INFO] [1790037860.044722]: [GRAPH] nodes=343 edges=1493 build=0.113s frame=map
+[INFO] [1790037861.304652]: [GRAPH] nodes=356 edges=1547 build=0.125s frame=map
+[INFO] [1790037862.338560]: [GRAPH] nodes=362 edges=1576 build=0.151s frame=map
+[INFO] [1790037863.551209]: [GRAPH] nodes=368 edges=1599 build=0.121s frame=map
+[INFO] [1790037864.840651]: [GRAPH] nodes=376 edges=1632 build=0.161s frame=map
+[INFO] [1790037866.115013]: [GRAPH] nodes=383 edges=1666 build=0.186s frame=map
+[INFO] [1790037867.351063]: [GRAPH] nodes=385 edges=1674 build=0.171s frame=map
+[INFO] [1790037868.352479]: [GRAPH] nodes=392 edges=1699 build=0.172s frame=map
+[INFO] [1790037869.321795]: [GRAPH] nodes=399 edges=1735 build=0.142s frame=map
+[INFO] [1790037870.340499]: [GRAPH] nodes=408 edges=1773 build=0.153s frame=map
+[INFO] [1790037871.516202]: [GRAPH] nodes=420 edges=1828 build=0.087s frame=map
+[INFO] [1790037872.747090]: [GRAPH] nodes=433 edges=1881 build=0.068s frame=map
+[INFO] [1790037873.828391]: [GRAPH] nodes=436 edges=1896 build=0.141s frame=map
+[INFO] [1790037874.920171]: [GRAPH] nodes=437 edges=1900 build=0.215s frame=map
+[INFO] [1790037876.012223]: [GRAPH] nodes=439 edges=1911 build=0.083s frame=map
+[INFO] [1790037877.005023]: [GRAPH] nodes=440 edges=1916 build=0.076s frame=map
+[INFO] [1790037878.115914]: [GRAPH] nodes=441 edges=1920 build=0.186s frame=map
+[INFO] [1790037879.152746]: [GRAPH] nodes=441 edges=1920 build=0.222s frame=map
+[INFO] [1790037882.341713]: [GRAPH] nodes=441 edges=1920 build=0.157s frame=map
+[INFO] [1790037883.502208]: [GRAPH] nodes=444 edges=1935 build=0.309s frame=map
+[INFO] [1790037884.610314]: [GRAPH] nodes=450 edges=1962 build=0.181s frame=map
+[INFO] [1790037885.596922]: [GRAPH] nodes=455 edges=1981 build=0.167s frame=map
+[INFO] [1790037886.640950]: [GRAPH] nodes=458 edges=1991 build=0.211s frame=map
+[INFO] [1790037887.887250]: [GRAPH] nodes=458 edges=1991 build=0.207s frame=map
+[exploration_policy-2] killing on exit
+[research_demo-1] killing on exit
+[INFO] [1790037889.877928]: [GRAPH] nodes=460 edges=1995 build=0.198s frame=map
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m
+[rosout-1] killing on exit
+[master] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m

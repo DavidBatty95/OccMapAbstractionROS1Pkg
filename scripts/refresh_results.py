@@ -21,7 +21,7 @@ def main():
              'These are bounded ROS integration demonstrations. All three runs used seed 42,',
              'map factor 5 and a 120-second wall-clock recording. Full missions were not',
              'completed. The paired reactor runs are descriptive examples, not a multi-seed',
-             'evaluation. Their simulated durations and coverage differ slightly.', '',
+             'evaluation. Their simulated durations and achieved coverage differ.', '',
              '| Run | Simulated time (s) | Observed free (%) | Path (m) | Exposure (relative-rate s) | Rejected motion | Pipeline check |',
              '| --- | ---: | ---: | ---: | ---: | ---: | --- |']
     for name in ('reactor', 'barrel', 'unaware'):
@@ -30,7 +30,15 @@ def main():
         lines.append('| [%s](results/%s/summary.json) | %.1f | %.2f | %.2f | %.1f | %d | %s |' % (
             name, name, m['simulation_time_s'], 100 * m['observed_free_fraction'], m['distance_m'],
             m['dose_relative_rate_seconds'], m['rejected_motion_segments'], 'pass' if summary['smoke_pass'] else 'fail'))
-    lines += ['', 'The unaware run disables the radiation estimator and radiation-based policy',
+    aware = json.loads((result_dir / 'reactor/summary.json').read_text())['metrics']
+    unaware = json.loads((result_dir / 'unaware/summary.json').read_text())['metrics']
+    lines += ['', 'In this recorded reactor pair, the aware policy accumulated **%.1f relative-rate s**' % aware['dose_relative_rate_seconds'],
+              'against **%.1f** for the unaware baseline, with **%.2f%% vs %.2f%%** observed-free coverage.' % (
+                  unaware['dose_relative_rate_seconds'], 100 * aware['observed_free_fraction'], 100 * unaware['observed_free_fraction']),
+              'These outcomes are retained as measured; the demo is not evidence that radiation',
+              'awareness improves the exploration objective. Estimator calibration and policy',
+              'evaluation remain research work.', '',
+              'The unaware run disables the radiation estimator and radiation-based policy',
               'penalties. The simulator still measures exposure. A lower exposure in one',
               'recording does not establish general superiority; see [methodology](METHODOLOGY.md).', '',
               '## Radiation-unaware baseline recording', '',

@@ -4,3 +4,5 @@
 *.npy binary
 *.png binary
 *.gif binary
+# Published CSVs use LF before hashing so provenance survives a checkout.
+*.csv text eol=lf

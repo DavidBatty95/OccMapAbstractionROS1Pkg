@@ -265,7 +265,7 @@ def main():
         log.close()
     if records:
         with (output / 'metrics.csv').open('w', newline='') as stream:
-            writer = csv.DictWriter(stream, fieldnames=list(records[0]))
+            writer = csv.DictWriter(stream, fieldnames=list(records[0]), lineterminator='\n')
             writer.writeheader()
             writer.writerows(records)
     if frames:

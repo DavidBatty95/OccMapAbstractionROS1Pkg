@@ -1,115 +1,146 @@
-# ☢️ OccMapAbstractionROS1Pkg
+<div align="center">
+  <img src="docs/media/banner.svg" width="100%" alt="OccMap — radiation-aware exploration">
+  <p><strong>ROS Noetic · Occupancy-map abstraction · Frontier exploration · Online radiation estimation</strong></p>
+  <a href="https://github.com/DavidBatty95/OccMapAbstractionROS1Pkg/actions/workflows/verification.yml">Verification workflow</a> ·
+  <a href="docs/METHODOLOGY.md">Research methodology</a> ·
+  <a href="docs/RESULTS.md">Recorded results</a> ·
+  <a href="CITATION.cff">Cite this software</a>
+</div>
 
-🚧 Work in Progress — Repository Under Active Development 🚧
+**Explore an unknown map while accounting for an initially unknown radiation field.**
+OccMap converts observed free space into a sparse navigation graph, scores
+frontiers, estimates radiation online with a corridor-aware Gaussian process,
+and plans exploration corridors using geometric and radiation costs.
 
-This repository contains currently unsorted research code developed as part of a PhD project investigating radiation-aware autonomous exploration and navigation for mobile robots operating in hazardous and initially unknown environments.
+Developed by **David Batty, University of Liverpool**, as part of PhD research into
+autonomy in hazardous environments.
 
----
+## Quick start — Docker + your browser
 
-A **ROS 1 Gazebo simulation workspace** for research into  
-**radiation-aware autonomous exploration and navigation**.
+The supported quick start is **x86-64 Linux with Docker Engine and Compose v2**.
+No host ROS installation, GPU, Gazebo or display server is needed. Allow several
+GB for the first image build and an internet connection for dependencies.
 
-This repository contains the full simulation, mapping, and planning stack used to develop and validate **occupancy-map abstraction**, **frontier-based exploration**, and **radiation-informed path planning** for hazardous nuclear environments.
+```bash
+git clone https://github.com/DavidBatty95/OccMapAbstractionROS1Pkg.git
+cd OccMapAbstractionROS1Pkg
+bash scripts/demo.sh
+```
 
----
+Open **[http://localhost:8080](http://localhost:8080)**. The container builds the
+installed catkin package, starts ROS, runs a two-minute exploration session, and
+keeps the results page available afterward. Stop with **Ctrl+C**; artifacts remain
+under `results/`. [Installation and troubleshooting](docs/INSTALLATION.md).
 
-## 🧭 Overview
+## See the method running
 
-This workspace provides a complete and reproducible experimental environment for studying how mobile robots can explore and navigate when both **geometry and radiation fields are initially unknown**.
+| Reactor-room exploration | Barrel-store exploration |
+| --- | --- |
+| ![Recorded ROS reactor-room exploration](docs/media/reactor.gif) | ![Recorded ROS barrel-store exploration](docs/media/barrel.gif) |
 
-It includes:
+These are accelerated recordings of **the included ROS policy and estimator**
+in the new 2D reference simulator. Left: observed map, abstraction graph and
+planned corridor. Right: online radiation cost estimate and travelled path.
+Blue is the trajectory; the green dot is the robot. Dark regions are unobserved.
 
-🧪 **Gazebo nuclear environments**  
-Custom reactor-style worlds, radiation sources, and sensor plugins.
+**Scope:** the containerised 2D pipeline is runnable and tested. The simulator uses
+idealised sensing and holonomic motion; these previews are not Gazebo recordings,
+completed-mission results, or evidence of a statistically significant dose
+reduction. Original Gazebo integration files are retained, with recovered pinned
+upstreams in [`legacy.repos`](legacy.repos). [Compatibility status](docs/LEGACY.md).
 
-🤖 **Autonomous exploration stack**  
-Occupancy-map abstraction, frontier detection, navigation coordination, and radiation-aware decision making.
+## Run experiments
 
-📈 **Radiation field estimation**  
-Online radiation prediction (e.g. Gaussian Process Regression) to inform safe path planning.
+```bash
+# Bounded headless run; exits nonzero if the pipeline checks fail:
+bash scripts/demo.sh --duration 60 --check
 
-🗺 **Maps and datasets**  
-Real-world and synthetic environments for benchmarking and reproducibility.
+# Another bundled environment:
+bash scripts/demo.sh --map barrel_store_sim --duration 120 --seed 42 --check
 
-This repository represents the **primary simulation platform** used to evaluate the methods described in the associated research and PhD thesis.
+# Radiation-unaware baseline, with exposure still measured by the simulator:
+bash scripts/demo.sh --duration 120 --no-radiation --check
 
----
+# Finer map resolution; more CPU work:
+bash scripts/demo.sh --factor 2 --duration 120
+```
 
-## 📁 Repository Structure
+Each run has its own directory containing:
 
-OccMapAbstractionROS1Pkg/
-├── src/ # All ROS packages
-├── launch/ # Simulation & experiment launch files
-├── worlds/ # Gazebo nuclear environments
-├── maps/ # Test and real-world maps
-├── models/ # Gazebo models
-└── README.md
+| Artifact | Purpose |
+| --- | --- |
+| `live.png`, `demo.gif` | Last view and accelerated recording of ROS observations |
+| `metrics.csv` | Simulation time, observed-free fraction, path length and relative exposure |
+| `summary.json` | Final metrics, policy state and explicit pipeline-check outcome |
+| `manifest.json` | Parameters, seed, package versions, source and map SHA-256 hashes |
+| `ros.log` | Node startup, graph/estimator diagnostics and failures |
 
+Five map/field pairs are bundled: `reactor_room_sim`, `barrel_store_sim`,
+`base_env_sim`, `hut_interior`, and `hut_expanded`. All are checked for loading and
+field consistency; end-to-end recorded examples are listed in [results](docs/RESULTS.md).
 
----
+## Architecture
 
-# 🧠 What This Workspace Implements
-☢️ **Radiation-Aware Simulation**
+![ROS reference demo architecture schematic](docs/media/architecture.svg)
 
-Custom Gazebo plugins provide radiation sources and sensors that publish realistic radiation measurements into ROS topics.
+1. **Observe:** raycast an initially hidden map and sample radiation at the robot.
+2. **Abstract:** build a sparse free-space graph with clearance and visibility checks.
+3. **Estimate:** aggregate samples into voxels and fit a local sparse variational GP
+   using spatial and geodesic-landmark features.
+4. **Explore:** score frontier candidates and plan graph corridors with radiation costs.
+5. **Record:** execute checked motion and export observations, metrics and provenance.
 
-🗺 **Occupancy Map Abstraction**
+The planner never receives the ground-truth radiation array. The simulator uses
+truth for sensing, collision checks and scoring. [Interfaces and assumptions](docs/METHODOLOGY.md).
 
-Dense occupancy grids are converted into sparse node graphs suitable for planning in large environments.
+## Performance and verification
 
-🧭 **Frontier-Based Exploration**
+The refresh replaces per-cell Python clearance scans with SciPy's exact Euclidean
+distance transform, and legacy BFS inflation with a compiled Manhattan distance
+transform. It also fixes repeated geodesic queue visits, GP feature conditioning,
+local-fit fallback crashes and concurrent estimator state updates.
 
-The robot selects navigation targets at the boundary between known and unknown space to drive systematic exploration.
+Raw before/after timings and metric differences are published in
+[performance results](docs/PERFORMANCE.md). These are **kernel microbenchmarks**;
+the clearance metric intentionally changes from approximate octile to Euclidean.
 
-📊 **Radiation Field Estimation**
+```bash
+docker build -t occmap-research:noetic -f docker/Dockerfile .
+docker run --rm occmap-research:noetic python3 -m pytest -q tests
+```
 
-Online models estimate the radiation distribution in the environment, allowing the robot to reason about dose and risk.
+CI builds the same image, runs numerical regression tests, and executes a headless
+ROS smoke test. It retains recordings and logs even when a run fails.
+[Local verification record](docs/VERIFICATION.md).
 
-🤖 **Navigation Coordination**
+## Repository guide
 
-High-level logic chooses safe and efficient routes through hazardous environments.
+```text
+src/exploration_pkg/
+  scripts/       ROS policy, estimator, simulators and legacy integration nodes
+  python/occmap/ ROS-independent geometry and map loading
+  launch/        Self-contained demo and original launch files
+  config/        Documented reference-demo parameters
+  maps/          Occupancy maps, source definitions and precomputed dose fields
+docker/          Noetic image, Python requirements and entrypoint
+scripts/         Run, benchmark and publish experiment artifacts
+tests/           Numerical and ROS-node regression checks
+docs/            Methodology, installation, recordings and performance evidence
+archive/         Original external dependency revision record
+```
 
----
+## Research use and attribution
 
-# 🎯 Intended Use
+- [Methodology and limitations](docs/METHODOLOGY.md)
+- [Recorded runs](docs/RESULTS.md) · [Performance measurements](docs/PERFORMANCE.md)
+- [Legacy Gazebo restoration](docs/LEGACY.md)
+- [Contributing](CONTRIBUTING.md) · [Changelog](CHANGELOG.md)
 
-This repository is designed for:
+Radiation fields are in **relative dose-rate units**, not calibrated sieverts.
+Published animations demonstrate pipeline behaviour; new scientific claims need
+controlled comparisons across maps, seeds and matched stopping criteria.
 
-🔬 Research and experimentation
-
-📄 Thesis and paper reproducibility
-
-🧪 Simulation-based validation of radiation-aware autonomy
-
-It is not intended to be a plug-and-play ROS navigation stack for production robots.
-
----
-
-# 🔧 Development Status
-
-This is an active research workspace.
-Code, package structure, and launch files will continue to evolve as experiments and publications progress.
-
-Planned improvements include:
-
-Cleaner package modularisation
-
-More documented launch pipelines
-
-Example experiment configurations
-
----
-
-# 👤 Author
-
-Author: David Batty
-Email: dwbatty@liverpool.ac.uk
-University of Liverpool — School of Engineering
-Research focus: Radiation-aware autonomous exploration in hazardous environments
-
----
-
-# 📜 License
-
-License will be finalised once the workspace stabilises.
-For now, please contact the author regarding reuse or redistribution.
+Project code is licensed under [BSD-3-Clause](LICENSE). External dependencies keep
+their own licences and attribution; see [third-party notes](docs/THIRD_PARTY.md).
+Use [`CITATION.cff`](CITATION.cff) and include your exact commit and run manifest
+when citing an experiment. Contact: [dwbatty@liverpool.ac.uk](mailto:dwbatty@liverpool.ac.uk).

@@ -1,0 +1,359 @@
+... logging to /tmp/.ros/log/38329f1a-b61e-11f1-b526-721ddbfca8a1/roslaunch-bd564019ada6-217.log
+Checking log directory for disk usage. This may take a while.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is <1GB.
+]2;roscore
+[1mstarted roslaunch server http://bd564019ada6:39907/[0m
+ros_comm version 1.17.4
+
+
+SUMMARY
+========
+
+PARAMETERS
+ * /rosdistro: noetic
+ * /rosversion: 1.17.4
+
+NODES
+
+auto-starting new master
+[1mprocess[master]: started with pid [225][0m
+[1mROS_MASTER_URI=http://bd564019ada6:11311/[0m
+]2;roscore http://bd564019ada6:11311/
+[1msetting /run_id to 38329f1a-b61e-11f1-b526-721ddbfca8a1[0m
+[1mprocess[rosout-1]: started with pid [235][0m
+started core service [/rosout]
+... logging to /tmp/.ros/log/38329f1a-b61e-11f1-b526-721ddbfca8a1/roslaunch-bd564019ada6-248.log
+Checking log directory for disk usage. This may take a while.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is <1GB.
+]2;/opt/occmap/install/share/exploration_pkg/launch/demo.launch
+[1mstarted roslaunch server http://bd564019ada6:33487/[0m
+
+SUMMARY
+========
+
+PARAMETERS
+ * /exploration_policy/astar_rad_integral_weight: 4.0
+ * /exploration_policy/cluster_min_size: 3
+ * /exploration_policy/completion_confirm_cycles: 12
+ * /exploration_policy/completion_min_total_distance_m: 5.0
+ * /exploration_policy/edge_dist_max_m: 3.0
+ * /exploration_policy/enable_preplan: False
+ * /exploration_policy/frontier_extra_clearance_m: 0.05
+ * /exploration_policy/frontier_min_denom_cells: 8
+ * /exploration_policy/frontier_min_goal_separation_m: 0.8
+ * /exploration_policy/goal_hold_min_s: 3.0
+ * /exploration_policy/graph_force_rebuild_period_s: 4.0
+ * /exploration_policy/graph_min_update_period_s: 1.0
+ * /exploration_policy/max_neighbors: 8
+ * /exploration_policy/max_total_nodes: 1800
+ * /exploration_policy/nav_stale_reset_s: 12.0
+ * /exploration_policy/radiation_edge_weight: 0.6
+ * /exploration_policy/radiation_exclusion_threshold: 0.9
+ * /exploration_policy/radiation_goal_hard_cap: 0.95
+ * /exploration_policy/radiation_goal_soft_cap: 0.65
+ * /exploration_policy/radiation_weight: 1.8
+ * /exploration_policy/replan_period_s: 1.0
+ * /exploration_policy/strict_min_clearance_m: 0.18
+ * /exploration_policy/target_node_spacing_m: 0.65
+ * /exploration_policy/use_radiation: True
+ * /exploration_policy/wall_buffer_m: 0.16
+ * /rad_GPR_node/abs_scale_uSv: 300.0
+ * /rad_GPR_node/coarse_factor: 3
+ * /rad_GPR_node/force_cpu: True
+ * /rad_GPR_node/gp_refit_period_s: 3.0
+ * /rad_GPR_node/inducing_points: 32
+ * /rad_GPR_node/local_margin_m: 1.0
+ * /rad_GPR_node/local_radius_m: 4.0
+ * /rad_GPR_node/max_query_points: 1200
+ * /rad_GPR_node/seed: 42
+ * /rad_GPR_node/smooth_sigma_cells: 0.0
+ * /rad_GPR_node/torch_threads: 1
+ * /rad_GPR_node/train_steps: 8
+ * /research_demo/factor: 5
+ * /research_demo/map: barrel_store_sim
+ * /rosdistro: noetic
+ * /rosversion: 1.17.4
+
+NODES
+  /
+    exploration_policy (exploration_pkg/exploration_policy_node.py)
+    rad_GPR_node (exploration_pkg/rad_GPR_node.py)
+    research_demo (exploration_pkg/research_demo_node.py)
+
+[1mROS_MASTER_URI=http://localhost:11311[0m
+]2;/opt/occmap/install/share/exploration_pkg/launch/demo.launch http://localhost:11311
+[1mprocess[research_demo-1]: started with pid [263][0m
+[1mprocess[exploration_policy-2]: started with pid [264][0m
+[1mprocess[rad_GPR_node-3]: started with pid [265][0m
+[INFO] [1790037636.119016]: ExplorerPolicy v20 COMPLETE started: map_frame='map' base_frame='base_link' strict=True los_precheck=False clustering=True kdtree=True use_radiation=True rad_caps(soft=0.65 hard=0.95) rad_excl=True
+[INFO] [1790037636.417517]: [MISSION] Start pose recorded (MAP): (-0.05, -0.01, 0.0 deg)
+[INFO] [1790037636.437490]: [GRAPH] nodes=51 edges=236 build=0.018s frame=map
+[INFO] [1790037637.641672]: [GRAPH] nodes=75 edges=344 build=0.022s frame=map
+[INFO] [1790037638.190128]: rad_GPR_node v7.1 (GPyTorch SVGP corridor-aware) running on device=cpu (cuda=False) meas_topic=/sim_rad_sensor
+[INFO] [1790037638.211095]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037638.241808]: [rad_GPR] meas @ (0.21, 0.65) = 63.035 | voxels=1 scale=300.000
+[INFO] [1790037638.551891]: [rad_GPR] waiting for samples: voxels=2
+[INFO] [1790037638.675295]: [GRAPH] nodes=82 edges=376 build=0.027s frame=map
+[INFO] [1790037639.751556]: [GRAPH] nodes=88 edges=403 build=0.043s frame=map
+[INFO] [1790037640.238997]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037640.335488]: [rad_GPR] meas @ (0.85, 0.75) = 56.298 | voxels=4 scale=300.000
+[INFO] [1790037640.647300]: [rad_GPR] waiting for samples: voxels=4
+[INFO] [1790037640.947167]: [GRAPH] nodes=91 edges=415 build=0.025s frame=map
+[INFO] [1790037642.163717]: [GRAPH] nodes=97 edges=437 build=0.029s frame=map
+[INFO] [1790037642.336642]: [rad_GPR] meas @ (0.85, 1.95) = 66.826 | voxels=8 scale=300.000
+[INFO] [1790037642.342021]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037643.473907]: [GRAPH] nodes=100 edges=452 build=0.030s frame=map
+[INFO] [1790037644.199541]: [rad_GPR] SVGP model created feat_dim=7 inducing=8 device=cpu
+[INFO] [1790037644.302088]: [rad_GPR] FIT ok: trainN=8 queryQ=360 M=8 device=cpu ls=1.227 noise=0.305 scale=300.000
+[INFO] [1790037644.342324]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037644.372268]: [rad_GPR] meas @ (1.36, 3.00) = 48.771 | voxels=9 scale=300.000
+[INFO] [1790037644.562940]: [GRAPH] nodes=104 edges=473 build=0.043s frame=map
+[INFO] [1790037645.658489]: [GRAPH] nodes=109 edges=492 build=0.039s frame=map
+[INFO] [1790037646.217870]: [rad_GPR] SVGP model created feat_dim=7 inducing=12 device=cpu
+[INFO] [1790037646.360170]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037646.442373]: [rad_GPR] meas @ (1.58, 3.82) = 41.257 | voxels=13 scale=300.000
+[INFO] [1790037646.923610]: [GRAPH] nodes=115 edges=524 build=0.030s frame=map
+[INFO] [1790037647.954361]: [GRAPH] nodes=121 edges=551 build=0.055s frame=map
+[INFO] [1790037648.443890]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037648.446308]: [rad_GPR] meas @ (2.43, 4.67) = 32.139 | voxels=19 scale=300.000
+[INFO] [1790037649.032726]: [GRAPH] nodes=127 edges=581 build=0.065s frame=map
+[INFO] [1790037649.403190]: [rad_GPR] SVGP model created feat_dim=7 inducing=20 device=cpu
+[INFO] [1790037649.583343]: [rad_GPR] FIT ok: trainN=20 queryQ=305 M=20 device=cpu ls=1.089 noise=0.304 scale=300.000
+[INFO] [1790037650.327974]: [GRAPH] nodes=133 edges=611 build=0.045s frame=map
+[INFO] [1790037650.562113]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037650.564372]: [rad_GPR] meas @ (3.23, 5.47) = 19.503 | voxels=24 scale=300.000
+[INFO] [1790037651.466214]: [GRAPH] nodes=140 edges=640 build=0.059s frame=map
+[INFO] [1790037652.432632]: [rad_GPR] SVGP model created feat_dim=7 inducing=20 device=cpu
+[INFO] [1790037652.522521]: [rad_GPR] FIT ok: trainN=20 queryQ=282 M=20 device=cpu ls=1.310 noise=0.304 scale=300.000
+[INFO] [1790037652.563227]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037652.634076]: [rad_GPR] meas @ (4.09, 6.09) = 17.683 | voxels=29 scale=300.000
+[INFO] [1790037652.801776]: [GRAPH] nodes=143 edges=654 build=0.050s frame=map
+[INFO] [1790037653.960251]: [GRAPH] nodes=144 edges=658 build=0.052s frame=map
+[INFO] [1790037654.645987]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037654.650149]: [rad_GPR] meas @ (5.04, 6.68) = 6.515 | voxels=34 scale=300.000
+[INFO] [1790037654.968443]: [GRAPH] nodes=144 edges=658 build=0.041s frame=map
+[INFO] [1790037655.543177]: [rad_GPR] SVGP model created feat_dim=7 inducing=23 device=cpu
+[INFO] [1790037655.635658]: [rad_GPR] FIT ok: trainN=23 queryQ=216 M=23 device=cpu ls=1.283 noise=0.304 scale=300.000
+[INFO] [1790037656.110841]: [GRAPH] nodes=148 edges=675 build=0.074s frame=map
+[INFO] [1790037656.741268]: [rad_GPR] meas @ (5.64, 7.46) = 3.662 | voxels=37 scale=300.000
+[INFO] [1790037656.748338]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037657.252718]: [GRAPH] nodes=148 edges=675 build=0.053s frame=map
+[INFO] [1790037658.561745]: [rad_GPR] SVGP model created feat_dim=7 inducing=23 device=cpu
+[INFO] [1790037658.566653]: [GRAPH] nodes=150 edges=683 build=0.073s frame=map
+[INFO] [1790037658.662026]: [rad_GPR] FIT ok: trainN=23 queryQ=183 M=23 device=cpu ls=1.169 noise=0.304 scale=300.000
+[INFO] [1790037658.826514]: [rad_GPR] meas @ (5.65, 8.60) = 8.655 | voxels=41 scale=300.000
+[INFO] [1790037658.833250]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037659.717271]: [GRAPH] nodes=152 edges=689 build=0.074s frame=map
+[INFO] [1790037660.716970]: [GRAPH] nodes=160 edges=735 build=0.060s frame=map
+[INFO] [1790037660.827990]: [rad_GPR] meas @ (5.65, 9.80) = 7.390 | voxels=45 scale=300.000
+[INFO] [1790037660.833732]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037661.751770]: [GRAPH] nodes=169 edges=772 build=0.093s frame=map
+[INFO] [1790037661.897226]: [rad_GPR] SVGP model created feat_dim=7 inducing=21 device=cpu
+[INFO] [1790037661.975825]: [rad_GPR] FIT ok: trainN=21 queryQ=208 M=21 device=cpu ls=1.306 noise=0.305 scale=300.000
+[INFO] [1790037662.840697]: [rad_GPR] meas @ (5.65, 10.94) = 17.325 | voxels=49 scale=300.000
+[INFO] [1790037662.847811]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037663.065514]: [GRAPH] nodes=170 edges=775 build=0.057s frame=map
+[INFO] [1790037665.086972]: [rad_GPR] SVGP model created feat_dim=7 inducing=24 device=cpu
+[INFO] [1790037665.288091]: [rad_GPR] FIT ok: trainN=24 queryQ=211 M=24 device=cpu ls=1.289 noise=0.305 scale=300.000
+[INFO] [1790037665.314476]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037665.318769]: [rad_GPR] meas @ (5.65, 9.75) = 9.547 | voxels=49 scale=300.000
+[INFO] [1790037667.177268]: [GRAPH] nodes=170 edges=775 build=0.029s frame=map
+[INFO] [1790037667.320721]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037667.422978]: [rad_GPR] meas @ (5.65, 8.49) = 7.295 | voxels=49 scale=300.000
+[INFO] [1790037668.041904]: [rad_GPR] SVGP model created feat_dim=7 inducing=31 device=cpu
+[INFO] [1790037668.094261]: [rad_GPR] FIT ok: trainN=31 queryQ=257 M=31 device=cpu ls=1.157 noise=0.304 scale=300.000
+[INFO] [1790037669.322675]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037669.426616]: [rad_GPR] meas @ (5.65, 8.25) = 4.482 | voxels=49 scale=300.000
+[INFO] [1790037671.441700]: [GRAPH] nodes=170 edges=775 build=0.067s frame=map
+[INFO] [1790037671.669873]: [rad_GPR] SVGP model created feat_dim=7 inducing=29 device=cpu
+[INFO] [1790037671.778448]: [rad_GPR] FIT ok: trainN=29 queryQ=246 M=29 device=cpu ls=1.315 noise=0.304 scale=300.000
+[INFO] [1790037671.785047]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037671.786886]: [rad_GPR] meas @ (5.65, 9.63) = 2.742 | voxels=49 scale=300.000
+[INFO] [1790037672.452801]: [GRAPH] nodes=170 edges=775 build=0.047s frame=map
+[INFO] [1790037673.662382]: [GRAPH] nodes=174 edges=794 build=0.043s frame=map
+[INFO] [1790037673.825651]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037673.827001]: [rad_GPR] meas @ (4.68, 10.17) = 24.669 | voxels=53 scale=300.000
+[INFO] [1790037674.275542]: [rad_GPR] SVGP model created feat_dim=7 inducing=31 device=cpu
+[INFO] [1790037674.333115]: [rad_GPR] FIT ok: trainN=31 queryQ=269 M=31 device=cpu ls=1.227 noise=0.304 scale=300.000
+[INFO] [1790037675.039366]: [GRAPH] nodes=181 edges=827 build=0.093s frame=map
+[INFO] [1790037675.856760]: [rad_GPR] meas @ (3.74, 10.16) = 32.463 | voxels=58 scale=300.000
+[INFO] [1790037675.863699]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037676.132910]: [GRAPH] nodes=184 edges=842 build=0.083s frame=map
+[INFO] [1790037677.232997]: [GRAPH] nodes=188 edges=861 build=0.064s frame=map
+[INFO] [1790037677.952454]: [rad_GPR] SVGP model created feat_dim=7 inducing=32 device=cpu
+[INFO] [1790037678.061505]: [rad_GPR] FIT ok: trainN=44 queryQ=380 M=32 device=cpu ls=1.360 noise=0.304 scale=300.000
+[INFO] [1790037678.064586]: [rad_GPR] meas @ (3.25, 9.09) = 15.189 | voxels=63 scale=300.000
+[INFO] [1790037678.074514]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037678.290223]: [GRAPH] nodes=188 edges=861 build=0.066s frame=map
+[INFO] [1790037679.493803]: [GRAPH] nodes=188 edges=861 build=0.071s frame=map
+[INFO] [1790037680.068180]: [rad_GPR] meas @ (2.89, 8.49) = 11.103 | voxels=66 scale=300.000
+[INFO] [1790037680.145244]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037680.586539]: [GRAPH] nodes=188 edges=861 build=0.076s frame=map
+[INFO] [1790037681.143212]: [rad_GPR] SVGP model created feat_dim=7 inducing=32 device=cpu
+[INFO] [1790037681.258753]: [rad_GPR] FIT ok: trainN=54 queryQ=406 M=32 device=cpu ls=1.315 noise=0.305 scale=300.000
+[INFO] [1790037681.781683]: [GRAPH] nodes=189 edges=866 build=0.108s frame=map
+[INFO] [1790037682.168545]: [rad_GPR] meas @ (2.01, 9.13) = 15.923 | voxels=69 scale=300.000
+[INFO] [1790037682.181593]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037682.772553]: [GRAPH] nodes=190 edges=871 build=0.062s frame=map
+[INFO] [1790037683.827505]: [GRAPH] nodes=197 edges=901 build=0.092s frame=map
+[INFO] [1790037684.382671]: [rad_GPR] SVGP model created feat_dim=7 inducing=32 device=cpu
+[INFO] [1790037684.569340]: [rad_GPR] FIT ok: trainN=53 queryQ=354 M=32 device=cpu ls=1.359 noise=0.305 scale=300.000
+[INFO] [1790037684.588831]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037684.591933]: [rad_GPR] meas @ (1.45, 9.87) = 90.228 | voxels=73 scale=300.000
+[INFO] [1790037684.981131]: [GRAPH] nodes=203 edges=924 build=0.079s frame=map
+[INFO] [1790037686.008161]: [GRAPH] nodes=205 edges=934 build=0.090s frame=map
+[INFO] [1790037686.636076]: [rad_GPR] meas @ (1.45, 11.13) = 65.371 | voxels=78 scale=300.000
+[INFO] [1790037686.643560]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037687.129704]: [GRAPH] nodes=208 edges=949 build=0.087s frame=map
+[INFO] [1790037687.625143]: [rad_GPR] SVGP model created feat_dim=7 inducing=32 device=cpu
+[INFO] [1790037687.797442]: [rad_GPR] FIT ok: trainN=38 queryQ=325 M=32 device=cpu ls=1.358 noise=0.304 scale=300.000
+[INFO] [1790037688.257704]: [GRAPH] nodes=209 edges=953 build=0.092s frame=map
+[INFO] [1790037688.639636]: [rad_GPR] meas @ (1.03, 11.91) = 57.217 | voxels=81 scale=300.000
+[INFO] [1790037688.648317]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037689.426860]: [GRAPH] nodes=209 edges=953 build=0.036s frame=map
+[INFO] [1790037690.126953]: [rad_GPR] SVGP model created feat_dim=7 inducing=31 device=cpu
+[INFO] [1790037690.173769]: [rad_GPR] FIT ok: trainN=31 queryQ=255 M=31 device=cpu ls=1.360 noise=0.304 scale=300.000
+[INFO] [1790037690.702716]: [GRAPH] nodes=214 edges=977 build=0.058s frame=map
+[INFO] [1790037690.747891]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037690.749531]: [rad_GPR] meas @ (-0.05, 12.09) = 71.531 | voxels=85 scale=300.000
+[INFO] [1790037691.898387]: [GRAPH] nodes=220 edges=1001 build=0.029s frame=map
+[INFO] [1790037692.749950]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037692.850101]: [rad_GPR] meas @ (-1.16, 11.88) = 100.021 | voxels=89 scale=300.000
+[INFO] [1790037692.943537]: [GRAPH] nodes=222 edges=1011 build=0.042s frame=map
+[INFO] [1790037693.335818]: [rad_GPR] SVGP model created feat_dim=7 inducing=24 device=cpu
+[INFO] [1790037693.394574]: [rad_GPR] FIT ok: trainN=24 queryQ=254 M=24 device=cpu ls=1.178 noise=0.304 scale=300.000
+[INFO] [1790037694.092793]: [GRAPH] nodes=227 edges=1031 build=0.088s frame=map
+[INFO] [1790037694.751997]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037694.949962]: [rad_GPR] meas @ (-2.32, 11.49) = 129.777 | voxels=94 scale=300.000
+[INFO] [1790037695.199563]: [GRAPH] nodes=238 edges=1084 build=0.042s frame=map
+[INFO] [1790037696.440921]: [GRAPH] nodes=249 edges=1133 build=0.067s frame=map
+[INFO] [1790037696.487151]: [rad_GPR] SVGP model created feat_dim=7 inducing=25 device=cpu
+[INFO] [1790037696.600893]: [rad_GPR] FIT ok: trainN=25 queryQ=300 M=25 device=cpu ls=1.214 noise=0.304 scale=300.000
+[INFO] [1790037696.752970]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037697.030785]: [rad_GPR] meas @ (-3.43, 11.57) = 119.326 | voxels=98 scale=300.000
+[INFO] [1790037697.497776]: [GRAPH] nodes=250 edges=1137 build=0.080s frame=map
+[INFO] [1790037698.714940]: [GRAPH] nodes=250 edges=1137 build=0.095s frame=map
+[INFO] [1790037698.836548]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037699.032490]: [rad_GPR] meas @ (-4.36, 12.09) = 26.131 | voxels=103 scale=300.000
+[INFO] [1790037699.846167]: [rad_GPR] SVGP model created feat_dim=7 inducing=21 device=cpu
+[INFO] [1790037699.940219]: [rad_GPR] FIT ok: trainN=21 queryQ=239 M=21 device=cpu ls=1.196 noise=0.304 scale=300.000
+[INFO] [1790037700.849284]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037700.998512]: [GRAPH] nodes=250 edges=1137 build=0.095s frame=map
+[INFO] [1790037701.052510]: [rad_GPR] meas @ (-5.14, 11.50) = 17.303 | voxels=108 scale=300.000
+[INFO] [1790037701.993683]: [GRAPH] nodes=250 edges=1137 build=0.072s frame=map
+[INFO] [1790037702.837848]: [rad_GPR] SVGP model created feat_dim=7 inducing=25 device=cpu
+[INFO] [1790037702.944466]: [rad_GPR] FIT ok: trainN=25 queryQ=210 M=25 device=cpu ls=1.133 noise=0.304 scale=300.000
+[INFO] [1790037702.950743]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037703.133811]: [rad_GPR] meas @ (-5.50, 10.90) = 17.345 | voxels=112 scale=300.000
+[INFO] [1790037703.864252]: [GRAPH] nodes=250 edges=1137 build=0.130s frame=map
+[INFO] [1790037704.973151]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037705.017278]: [GRAPH] nodes=258 edges=1174 build=0.127s frame=map
+[INFO] [1790037705.256217]: [rad_GPR] meas @ (-4.56, 10.30) = 482.664 | voxels=115 scale=300.000
+[INFO] [1790037706.053306]: [GRAPH] nodes=264 edges=1202 build=0.079s frame=map
+[INFO] [1790037706.125057]: [rad_GPR] SVGP model created feat_dim=7 inducing=32 device=cpu
+[INFO] [1790037706.221166]: [rad_GPR] FIT ok: trainN=33 queryQ=337 M=32 device=cpu ls=1.240 noise=0.305 scale=300.000
+[INFO] [1790037707.047741]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037707.355459]: [GRAPH] nodes=270 edges=1231 build=0.097s frame=map
+[INFO] [1790037707.356148]: [rad_GPR] meas @ (-3.96, 9.40) = 411.544 | voxels=120 scale=300.000
+[INFO] [1790037708.525656]: [GRAPH] nodes=275 edges=1255 build=0.114s frame=map
+[INFO] [1790037709.426624]: [rad_GPR] SVGP model created feat_dim=7 inducing=32 device=cpu
+[INFO] [1790037709.529020]: [rad_GPR] FIT ok: trainN=37 queryQ=366 M=32 device=cpu ls=1.360 noise=0.304 scale=300.000
+[INFO] [1790037709.531707]: [rad_GPR] meas @ (-3.91, 8.45) = 398.564 | voxels=123 scale=300.000
+[INFO] [1790037709.538076]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037709.620359]: [GRAPH] nodes=278 edges=1262 build=0.126s frame=map
+[INFO] [1790037710.787815]: [GRAPH] nodes=279 edges=1266 build=0.080s frame=map
+[INFO] [1790037711.541855]: [rad_GPR] meas @ (-3.02, 7.56) = 160.738 | voxels=128 scale=300.000
+[INFO] [1790037711.547860]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037712.025436]: [GRAPH] nodes=280 edges=1270 build=0.089s frame=map
+[INFO] [1790037712.585154]: [rad_GPR] SVGP model created feat_dim=7 inducing=32 device=cpu
+[INFO] [1790037712.705028]: [rad_GPR] FIT ok: trainN=40 queryQ=298 M=32 device=cpu ls=1.360 noise=0.304 scale=300.000
+[INFO] [1790037713.124400]: [GRAPH] nodes=280 edges=1270 build=0.118s frame=map
+[INFO] [1790037713.628841]: [rad_GPR] meas @ (-2.17, 6.71) = 147.283 | voxels=133 scale=300.000
+[INFO] [1790037713.635145]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037714.338931]: [GRAPH] nodes=282 edges=1277 build=0.154s frame=map
+[INFO] [1790037715.813660]: [rad_GPR] SVGP model created feat_dim=7 inducing=32 device=cpu
+[INFO] [1790037715.902536]: [rad_GPR] FIT ok: trainN=36 queryQ=278 M=32 device=cpu ls=1.188 noise=0.304 scale=300.000
+[INFO] [1790037715.905082]: [rad_GPR] meas @ (-2.15, 6.69) = 147.283 | voxels=133 scale=300.000
+[INFO] [1790037715.909739]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037717.934093]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037717.936218]: [rad_GPR] meas @ (-2.15, 6.69) = 147.283 | voxels=133 scale=300.000
+[INFO] [1790037718.478885]: [GRAPH] nodes=282 edges=1277 build=0.082s frame=map
+[INFO] [1790037719.007925]: [rad_GPR] SVGP model created feat_dim=7 inducing=32 device=cpu
+[INFO] [1790037719.095918]: [rad_GPR] FIT ok: trainN=36 queryQ=278 M=32 device=cpu ls=1.232 noise=0.304 scale=300.000
+[INFO] [1790037720.057153]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037720.059792]: [rad_GPR] meas @ (-2.15, 6.69) = 147.283 | voxels=133 scale=300.000
+[INFO] [1790037722.119543]: [rad_GPR] SVGP model created feat_dim=7 inducing=32 device=cpu
+[INFO] [1790037722.209323]: [rad_GPR] FIT ok: trainN=36 queryQ=278 M=32 device=cpu ls=1.312 noise=0.304 scale=300.000
+[INFO] [1790037722.212185]: [rad_GPR] meas @ (-2.15, 6.69) = 147.283 | voxels=133 scale=300.000
+[INFO] [1790037722.228009]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037722.555587]: [GRAPH] nodes=282 edges=1277 build=0.114s frame=map
+[INFO] [1790037724.233286]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037724.234884]: [rad_GPR] meas @ (-2.15, 6.69) = 147.283 | voxels=133 scale=300.000
+[INFO] [1790037724.939910]: [rad_GPR] SVGP model created feat_dim=7 inducing=32 device=cpu
+[INFO] [1790037724.987954]: [rad_GPR] FIT ok: trainN=36 queryQ=278 M=32 device=cpu ls=1.178 noise=0.304 scale=300.000
+[INFO] [1790037725.403766]: [GRAPH] nodes=283 edges=1280 build=0.034s frame=map
+[INFO] [1790037726.334386]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037726.336350]: [rad_GPR] meas @ (-2.15, 6.09) = 108.249 | voxels=135 scale=300.000
+[INFO] [1790037728.863525]: [rad_GPR] SVGP model created feat_dim=7 inducing=32 device=cpu
+[INFO] [1790037728.937605]: [rad_GPR] FIT ok: trainN=32 queryQ=231 M=32 device=cpu ls=1.118 noise=0.304 scale=300.000
+[INFO] [1790037728.939948]: [rad_GPR] meas @ (-2.15, 6.09) = 108.249 | voxels=135 scale=300.000
+[INFO] [1790037728.945141]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037729.414647]: [GRAPH] nodes=283 edges=1280 build=0.045s frame=map
+[INFO] [1790037731.024627]: [rad_GPR] meas @ (-1.91, 6.09) = 72.989 | voxels=136 scale=300.000
+[INFO] [1790037731.031787]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037731.728347]: [rad_GPR] SVGP model created feat_dim=7 inducing=32 device=cpu
+[INFO] [1790037731.834726]: [rad_GPR] FIT ok: trainN=33 queryQ=225 M=32 device=cpu ls=1.137 noise=0.304 scale=300.000
+[INFO] [1790037732.301128]: [GRAPH] nodes=283 edges=1280 build=0.097s frame=map
+[INFO] [1790037733.037431]: [rad_GPR] meas @ (-0.71, 6.09) = 46.831 | voxels=139 scale=300.000
+[INFO] [1790037733.045403]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037733.527076]: [GRAPH] nodes=283 edges=1280 build=0.099s frame=map
+[INFO] [1790037735.050778]: [rad_GPR] SVGP model created feat_dim=7 inducing=32 device=cpu
+[INFO] [1790037735.175272]: [rad_GPR] FIT ok: trainN=59 queryQ=337 M=32 device=cpu ls=1.314 noise=0.305 scale=300.000
+[INFO] [1790037735.183526]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037735.187080]: [rad_GPR] meas @ (-0.35, 6.09) = 55.204 | voxels=140 scale=300.000
+[INFO] [1790037737.229680]: [rad_GPR] meas @ (-0.35, 6.09) = 55.204 | voxels=140 scale=300.000
+[INFO] [1790037737.237212]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037737.612082]: [GRAPH] nodes=283 edges=1280 build=0.132s frame=map
+[INFO] [1790037738.389066]: [rad_GPR] SVGP model created feat_dim=7 inducing=32 device=cpu
+[INFO] [1790037738.529898]: [rad_GPR] FIT ok: trainN=59 queryQ=337 M=32 device=cpu ls=1.314 noise=0.305 scale=300.000
+[INFO] [1790037739.245135]: [rad_GPR] meas @ (-0.35, 6.09) = 55.204 | voxels=140 scale=300.000
+[INFO] [1790037739.252373]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037741.667725]: [rad_GPR] SVGP model created feat_dim=7 inducing=32 device=cpu
+[INFO] [1790037741.727677]: [GRAPH] nodes=283 edges=1280 build=0.105s frame=map
+[INFO] [1790037741.786994]: [rad_GPR] FIT ok: trainN=59 queryQ=337 M=32 device=cpu ls=1.359 noise=0.305 scale=300.000
+[INFO] [1790037741.790691]: [rad_GPR] meas @ (-0.35, 6.09) = 55.204 | voxels=140 scale=300.000
+[INFO] [1790037741.799075]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037743.843799]: [rad_GPR] meas @ (0.76, 6.26) = 10.122 | voxels=144 scale=300.000
+[INFO] [1790037743.856017]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037745.394516]: [rad_GPR] SVGP model created feat_dim=7 inducing=32 device=cpu
+[INFO] [1790037745.582792]: [rad_GPR] FIT ok: trainN=70 queryQ=364 M=32 device=cpu ls=1.315 noise=0.305 scale=300.000
+[INFO] [1790037745.846013]: [rad_GPR] meas @ (1.75, 6.69) = 12.876 | voxels=145 scale=300.000
+[INFO] [1790037745.902188]: [GRAPH] nodes=283 edges=1280 build=0.101s frame=map
+[INFO] [1790037745.956894]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037748.042558]: [rad_GPR] SVGP model created feat_dim=7 inducing=32 device=cpu
+[INFO] [1790037748.262990]: [rad_GPR] FIT ok: trainN=85 queryQ=375 M=32 device=cpu ls=1.314 noise=0.306 scale=300.000
+[INFO] [1790037748.266307]: [rad_GPR] meas @ (3.07, 6.69) = 22.431 | voxels=149 scale=300.000
+[INFO] [1790037748.272792]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037750.035723]: [GRAPH] nodes=283 edges=1280 build=0.131s frame=map
+[INFO] [1790037750.978501]: [rad_GPR] SVGP model created feat_dim=7 inducing=32 device=cpu
+[INFO] [1790037751.182251]: [rad_GPR] FIT ok: trainN=84 queryQ=350 M=32 device=cpu ls=1.315 noise=0.305 scale=300.000
+[INFO] [1790037751.186502]: [rad_GPR] meas @ (4.56, 7.29) = 6.887 | voxels=154 scale=300.000
+[INFO] [1790037751.193988]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037753.236075]: [rad_GPR] meas @ (5.59, 7.29) = 4.713 | voxels=157 scale=300.000
+[INFO] [1790037753.244120]: [rad_GPR] map received: 199x436 res=0.100
+[INFO] [1790037753.863202]: [rad_GPR] SVGP model created feat_dim=7 inducing=32 device=cpu
+[INFO] [1790037753.973028]: [rad_GPR] FIT ok: trainN=72 queryQ=241 M=32 device=cpu ls=1.359 noise=0.305 scale=300.000
+[INFO] [1790037754.143281]: [GRAPH] nodes=283 edges=1280 build=0.173s frame=map
+[rad_GPR_node-3] killing on exit
+[exploration_policy-2] killing on exit
+[research_demo-1] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m
+[rosout-1] killing on exit
+[master] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m

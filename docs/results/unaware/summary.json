@@ -1,0 +1,58 @@
+{
+  "status": "recorded",
+  "run": "reactor_room_sim-unaware-s42-20260922T004248835290Z",
+  "mission_state": "EXPLORING",
+  "metrics": {
+    "simulation_time_s": 118.49999999999754,
+    "distance_m": 65.21558649341246,
+    "dose_relative_rate_seconds": 9028.556206172669,
+    "dose_rate_relative": 21.93514060974121,
+    "observed_free_fraction": 0.6953407534847793,
+    "rejected_motion_segments": 0,
+    "routes_received": 35,
+    "x": -6.890000190734868,
+    "y": -0.9499998092651367,
+    "map": "reactor_room_sim"
+  },
+  "messages": {
+    "map": 1185,
+    "radiation": 0,
+    "graph": 187,
+    "metrics": 1185
+  },
+  "policy": {
+    "t": 1790037888.929,
+    "reason": "replan_wait",
+    "mission_state": "EXPLORING",
+    "map_frame": "map",
+    "nodes": 458,
+    "edges": 1991,
+    "robot_xy": [
+      -6.950000190734867,
+      -0.9499998092651367
+    ],
+    "start_xy": [
+      -0.049999999999998934,
+      -0.049999999999998934
+    ],
+    "active_goal": [
+      36,
+      70
+    ],
+    "graph_version": 94,
+    "last_plan_ok": true,
+    "last_plan_reason": "ok",
+    "nav_progress": 0.3333333432674408,
+    "total_distance_m": 61.75760062509137,
+    "strict": true,
+    "los_precheck": false,
+    "clustering": true
+  },
+  "error": null,
+  "smoke_pass": true,
+  "acceptance_scope": "Pipeline smoke test, not full exploration or dose-reduction validation",
+  "animation": {
+    "frames": 102,
+    "playback_frame_ms": 100
+  }
+}
