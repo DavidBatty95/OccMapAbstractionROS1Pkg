@@ -1,0 +1,114 @@
+... logging to /tmp/.ros/log/e2bced40-c254-11f1-81da-46536eb8dd99/roslaunch-d98d0c157b9e-27.log
+Checking log directory for disk usage. This may take a while.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is <1GB.
+]2;roscore
+[1mstarted roslaunch server http://d98d0c157b9e:45893/[0m
+ros_comm version 1.17.4
+
+
+SUMMARY
+========
+
+PARAMETERS
+ * /rosdistro: noetic
+ * /rosversion: 1.17.4
+
+NODES
+
+auto-starting new master
+[1mprocess[master]: started with pid [35][0m
+[1mROS_MASTER_URI=http://d98d0c157b9e:11311/[0m
+]2;roscore http://d98d0c157b9e:11311/
+[1msetting /run_id to e2bced40-c254-11f1-81da-46536eb8dd99[0m
+[1mprocess[rosout-1]: started with pid [45][0m
+started core service [/rosout]
+... logging to /tmp/.ros/log/e2bced40-c254-11f1-81da-46536eb8dd99/roslaunch-d98d0c157b9e-58.log
+Checking log directory for disk usage. This may take a while.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is <1GB.
+]2;/opt/occmap/install/share/exploration_pkg/launch/demo.launch
+[1mstarted roslaunch server http://d98d0c157b9e:38161/[0m
+
+SUMMARY
+========
+
+PARAMETERS
+ * /exploration_policy/astar_rad_integral_weight: 4.0
+ * /exploration_policy/cluster_min_size: 3
+ * /exploration_policy/completion_confirm_cycles: 12
+ * /exploration_policy/completion_min_total_distance_m: 5.0
+ * /exploration_policy/edge_dist_max_m: 3.0
+ * /exploration_policy/enable_preplan: False
+ * /exploration_policy/frontier_extra_clearance_m: 0.05
+ * /exploration_policy/frontier_min_denom_cells: 8
+ * /exploration_policy/frontier_min_goal_separation_m: 0.8
+ * /exploration_policy/goal_hold_min_s: 3.0
+ * /exploration_policy/graph_force_rebuild_period_s: 4.0
+ * /exploration_policy/graph_min_update_period_s: 1.0
+ * /exploration_policy/max_neighbors: 8
+ * /exploration_policy/max_total_nodes: 1800
+ * /exploration_policy/nav_stale_reset_s: 12.0
+ * /exploration_policy/radiation_edge_weight: 0.6
+ * /exploration_policy/radiation_exclusion_threshold: 0.9
+ * /exploration_policy/radiation_goal_hard_cap: 0.95
+ * /exploration_policy/radiation_goal_soft_cap: 0.65
+ * /exploration_policy/radiation_weight: 1.8
+ * /exploration_policy/replan_period_s: 1.0
+ * /exploration_policy/strict_min_clearance_m: 0.18
+ * /exploration_policy/target_node_spacing_m: 0.65
+ * /exploration_policy/use_radiation: False
+ * /exploration_policy/wall_buffer_m: 0.16
+ * /research_demo/factor: 5
+ * /research_demo/map: reactor_room_sim
+ * /rosdistro: noetic
+ * /rosversion: 1.17.4
+
+NODES
+  /
+    exploration_policy (exploration_pkg/exploration_policy_node.py)
+    research_demo (exploration_pkg/research_demo_node.py)
+
+[1mROS_MASTER_URI=http://localhost:11311[0m
+]2;/opt/occmap/install/share/exploration_pkg/launch/demo.launch http://localhost:11311
+[1mprocess[research_demo-1]: started with pid [73][0m
+[1mprocess[exploration_policy-2]: started with pid [74][0m
+[INFO] [1791380527.855301]: ExplorerPolicy v20 COMPLETE started: map_frame='map' base_frame='base_link' strict=True los_precheck=False clustering=True kdtree=True use_radiation=False rad_caps(soft=0.65 hard=0.95) rad_excl=True
+[INFO] [1791380528.105747]: [MISSION] Start pose recorded (MAP): (-0.05, -0.05, 0.0 deg)
+[INFO] [1791380528.111699]: [GRAPH] nodes=47 edges=219 build=0.005s frame=map
+[INFO] [1791380529.115869]: [GRAPH] nodes=64 edges=289 build=0.010s frame=map
+[INFO] [1791380530.114894]: [GRAPH] nodes=67 edges=299 build=0.009s frame=map
+[INFO] [1791380531.119382]: [GRAPH] nodes=72 edges=321 build=0.014s frame=map
+[INFO] [1791380532.369654]: [GRAPH] nodes=77 edges=345 build=0.014s frame=map
+[INFO] [1791380533.368162]: [GRAPH] nodes=84 edges=379 build=0.012s frame=map
+[INFO] [1791380534.616980]: [GRAPH] nodes=89 edges=398 build=0.011s frame=map
+[INFO] [1791380535.625396]: [GRAPH] nodes=93 edges=416 build=0.020s frame=map
+[INFO] [1791380536.874944]: [GRAPH] nodes=102 edges=453 build=0.019s frame=map
+[INFO] [1791380537.872053]: [GRAPH] nodes=105 edges=466 build=0.016s frame=map
+[INFO] [1791380539.133610]: [GRAPH] nodes=112 edges=497 build=0.028s frame=map
+[INFO] [1791380540.374306]: [GRAPH] nodes=120 edges=535 build=0.018s frame=map
+[INFO] [1791380541.376014]: [GRAPH] nodes=125 edges=551 build=0.020s frame=map
+[INFO] [1791380542.626261]: [GRAPH] nodes=138 edges=615 build=0.020s frame=map
+[INFO] [1791380543.875438]: [GRAPH] nodes=144 edges=640 build=0.020s frame=map
+[INFO] [1791380544.885281]: [GRAPH] nodes=148 edges=660 build=0.029s frame=map
+[INFO] [1791380546.129054]: [GRAPH] nodes=151 edges=673 build=0.023s frame=map
+[INFO] [1791380547.127243]: [GRAPH] nodes=155 edges=691 build=0.021s frame=map
+[INFO] [1791380548.379947]: [GRAPH] nodes=158 edges=705 build=0.024s frame=map
+[INFO] [1791380549.380159]: [GRAPH] nodes=159 edges=709 build=0.024s frame=map
+[INFO] [1791380550.377797]: [GRAPH] nodes=159 edges=709 build=0.022s frame=map
+[INFO] [1791380551.880643]: [GRAPH] nodes=159 edges=709 build=0.025s frame=map
+[INFO] [1791380552.880211]: [GRAPH] nodes=159 edges=709 build=0.024s frame=map
+[INFO] [1791380554.139070]: [GRAPH] nodes=163 edges=729 build=0.033s frame=map
+[INFO] [1791380555.381787]: [GRAPH] nodes=168 edges=751 build=0.026s frame=map
+[INFO] [1791380556.632372]: [GRAPH] nodes=171 edges=765 build=0.026s frame=map
+[INFO] [1791380557.631319]: [GRAPH] nodes=174 edges=777 build=0.026s frame=map
+[exploration_policy-2] killing on exit
+[research_demo-1] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m
+[rosout-1] killing on exit
+[master] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m

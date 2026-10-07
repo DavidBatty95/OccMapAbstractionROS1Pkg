@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import re
 from pathlib import Path
 import shutil
 
@@ -12,8 +13,10 @@ ROOT = Path(__file__).resolve().parents[1]
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('run', type=Path)
-    parser.add_argument('--name', required=True, choices=['reactor', 'barrel', 'unaware'])
+    parser.add_argument('--name', required=True, help='Unique publication name, e.g. reactor-20261007')
     args = parser.parse_args()
+    if not re.fullmatch(r'[a-z][a-z0-9-]*', args.name):
+        parser.error('name must start with a lowercase letter and contain only letters, digits and hyphens')
     summary = json.loads((args.run / 'summary.json').read_text())
     if summary['status'] != 'recorded' or not summary['smoke_pass']:
         parser.error('Only complete recordings with passing pipeline checks can be published')

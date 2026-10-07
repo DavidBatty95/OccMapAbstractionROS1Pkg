@@ -25,6 +25,11 @@ jobs:
           mkdir -p results
           docker run --rm --user "$(id -u):$(id -g)" -v "$PWD/results:/results" \
             occmap-research:noetic python3 scripts/run_demo.py --duration 60 --check --output /results
+      - name: Radiation-disabled simulated-time pipeline
+        run: |
+          docker run --rm --user "$(id -u):$(id -g)" -v "$PWD/results:/results" \
+            occmap-research:noetic python3 scripts/run_demo.py --duration 90 \
+              --sim-duration 20 --no-radiation --check --output /results
       - name: Retain diagnostics even on failure
         if: always()
         uses: actions/upload-artifact@v4

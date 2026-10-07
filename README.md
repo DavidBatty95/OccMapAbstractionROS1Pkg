@@ -18,7 +18,7 @@ autonomy in hazardous environments.
 ## Quick start — Docker + your browser
 
 **GitHub-only recovery:** the previously separate research-demo branch has been
-recovered and is being validated for the downloadable PhD demonstration.
+recovered and locally validated for the downloadable PhD demonstration.
 [Recovery record](docs/RECOVERY.md) · [Guided demo and offline distribution](docs/DEMO_GUIDE.md).
 
 The supported quick start is **x86-64 Linux with Docker Engine and Compose v2**.

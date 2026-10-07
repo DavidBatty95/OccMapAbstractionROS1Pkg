@@ -1,5 +1,33 @@
 # Verification record
 
+## GitHub-only recovery — 7 October 2026
+
+Validated the recovered branch and new `occmap` launcher on Linux x86-64 with
+Docker 29.8.1 and Compose 5.5.1. The Docker build reused existing dependency layers;
+this was not a cache-free dependency-availability test.
+
+| Check | Outcome |
+| --- | --- |
+| Installed catkin Docker build | Passed |
+| Existing numerical and ROS-node regression suite | 20 passed in 2.65 s |
+| Documentation links and historical evidence hashes | Passed |
+| Radiation-aware reactor run, seed 42, target 30 simulated seconds | Passed; 30.3 s, 18.02 m, 31.59% observed free space, no rejected segments |
+| Radiation-disabled reactor run, same target and seed | Passed; 30.0 s, 17.70 m, 28.96% observed free space, no rejected segments |
+| Browser HTTP session with 10 simulated-second target | HTML HTTP 200, PNG served, recorded summary passed |
+| Browser container shutdown | Exit code 0 after Docker stop |
+| Deliberately unattainable 300 s target / 5 s wall limit | Exit code 1; summary failed with explicit timeout |
+
+The two fresh runs remain partial exploration sessions (`EXPLORING`), not mission
+completion. Their relative exposure integrals were 1338.55 and 4253.75 relative-rate
+seconds respectively. This single pair with slightly different stopping times
+does not establish a general reduction in dose. Retained evidence:
+[aware summary](results/reactor-20261007/summary.json),
+[disabled summary](results/unaware-20261007/summary.json), with manifests, metrics
+and ROS logs alongside them. Fresh animations are under `docs/media/` with matching
+date-stamped names; the README's original recordings remain historical evidence.
+
+## Original refresh — 22 September 2026
+
 The refresh was verified locally on 22 September 2026, using x86-64 Linux and
 the repository's Docker image. The Noetic base image is pinned by digest in
 `docker/Dockerfile`; runtime dependency versions are stored in each run manifest.
