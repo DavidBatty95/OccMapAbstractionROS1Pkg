@@ -165,6 +165,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--map', default='reactor_room_sim', choices=['reactor_room_sim', 'barrel_store_sim', 'base_env_sim', 'hut_interior', 'hut_expanded'])
     parser.add_argument('--duration', type=float, default=120, help='Wall-clock recording seconds after ROS startup')
+    parser.add_argument('--sim-duration', type=float, help='Stop at this simulated time; duration is the wall-time timeout')
     parser.add_argument('--factor', type=int, default=5, help='Conservative map downsampling factor')
     parser.add_argument('--seed', type=int, default=42)
     parser.add_argument('--no-radiation', action='store_true')
@@ -174,6 +175,8 @@ def main():
     args = parser.parse_args()
     if not 5 <= args.duration <= 3600 or args.factor < 1:
         parser.error('duration must be 5..3600 seconds and factor must be positive')
+    if args.sim_duration is not None and not 0 < args.sim_duration <= 3600:
+        parser.error('sim-duration must be positive and at most 3600 seconds')
     mode = 'unaware' if args.no_radiation else 'aware'
     name = '%s-%s-s%d-%s' % (args.map, mode, args.seed, datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ'))
     output = args.output.resolve() / name
@@ -186,6 +189,7 @@ def main():
                 hashes[str(path.relative_to(ROOT))] = hashlib.sha256(path.read_bytes()).hexdigest()
     manifest = {'schema_version': 1, 'run': name, 'map': args.map, 'factor': args.factor,
                 'radiation_aware': not args.no_radiation, 'seed': args.seed, 'duration_wall_s': args.duration,
+                'target_simulation_time_s': args.sim_duration,
                 'runtime': platform.platform(), 'python': platform.python_version(),
                 'packages': {p: importlib.metadata.version(p) for p in ('numpy', 'scipy', 'torch', 'gpytorch', 'Pillow')},
                 'files_sha256': hashes, 'model': '2D holonomic reference; unknown map; point radiation sensing',
@@ -250,6 +254,9 @@ def main():
                 summary = {'status': 'running', 'run': name, 'mission_state': record.mission,
                            'metrics': dict(record.metrics), 'messages': dict(record.messages), 'policy': dict(record.state)}
             atomic_json(output / 'summary.json', summary)
+            if (args.sim_duration is not None and
+                    summary.get('metrics', {}).get('simulation_time_s', 0) >= args.sim_duration):
+                break
             time.sleep(0.5)
     except Exception as exc:
         error = str(exc)
@@ -271,6 +278,9 @@ def main():
     if frames:
         frames[0].save(output / 'demo.gif', save_all=True, append_images=frames[1:], duration=100, loop=0)
     metrics = summary.get('metrics', {})
+    if (args.sim_duration is not None and not interrupted.is_set() and
+            metrics.get('simulation_time_s', 0) < args.sim_duration):
+        error = error or 'Simulated-time target not reached before wall-time timeout'
     messages = summary.get('messages', {})
     smoke = (metrics.get('distance_m', 0) > 1 and messages.get('graph', 0) > 0 and
              messages.get('map', 0) > 0 and (args.no_radiation or (
@@ -280,7 +290,7 @@ def main():
     if callback_error:
         error = error or 'Python exception in ROS log'
     summary.update(status='failed' if error else ('interrupted' if interrupted.is_set() else 'recorded'),
-                   error=error, smoke_pass=bool(smoke and not error),
+                    error=error, smoke_pass=bool(smoke and not error and not interrupted.is_set()),
                    acceptance_scope='Pipeline smoke test, not full exploration or dose-reduction validation',
                    animation={'frames': len(frames), 'playback_frame_ms': 100})
     atomic_json(output / 'summary.json', summary)
@@ -291,7 +301,7 @@ def main():
             pass
     if server:
         server.shutdown()
-    return 1 if error or (args.check and not smoke) else 0
+    return 1 if error or (args.check and not summary['smoke_pass']) else 0
 
 
 if __name__ == '__main__':

@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# Run with `bash occmap` from either a Git checkout or extracted source archive.
+set -euo pipefail
+ROOT="$(dirname "$(realpath "$0")")"
+command="${1:-help}"
+if [ "$#" -gt 0 ]; then shift; fi
+export LOCAL_UID="$(id -u)" LOCAL_GID="$(id -g)"
+case "$command" in
+  setup)
+    docker compose --project-directory "$ROOT" build "$@"
+    ;;
+  demo)
+    exec bash "$ROOT/scripts/demo.sh" --serve "$@"
+    ;;
+  run)
+    exec bash "$ROOT/scripts/demo.sh" --check "$@"
+    ;;
+  test)
+    docker compose --project-directory "$ROOT" build
+    exec docker compose --project-directory "$ROOT" run --rm demo python3 -m pytest -q tests "$@"
+    ;;
+  stop)
+    exec docker compose --project-directory "$ROOT" down
+    ;;
+  help|--help|-h)
+    cat <<'HELP'
+OccMap — downloadable ROS 1 PhD research demonstration
+
+  bash occmap setup                 Build the Docker runtime
+  bash occmap demo [options]        Live browser demo at http://localhost:8080
+  bash occmap run [options]         Bounded headless run with pipeline checks
+  bash occmap test                  Numerical and packaging regression tests
+  bash occmap stop                  Remove Compose services
+
+Options: --map reactor_room_sim --duration 120 --seed 42 --no-radiation
+Run options: --sim-duration 30 (requires a sufficient --duration wall-time limit)
+Results persist under results/. Ctrl+C stops an active foreground run.
+HELP
+    ;;
+  *) printf 'Unknown command: %s\nUse: bash occmap help\n' "$command" >&2; exit 2 ;;
+esac

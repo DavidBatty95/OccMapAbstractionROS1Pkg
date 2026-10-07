@@ -17,6 +17,10 @@ autonomy in hazardous environments.
 
 ## Quick start — Docker + your browser
 
+**GitHub-only recovery:** the previously separate research-demo branch has been
+recovered and is being validated for the downloadable PhD demonstration.
+[Recovery record](docs/RECOVERY.md) · [Guided demo and offline distribution](docs/DEMO_GUIDE.md).
+
 The supported quick start is **x86-64 Linux with Docker Engine and Compose v2**.
 No host ROS installation, GPU, Gazebo or display server is needed. Allow several
 GB for the first image build and an internet connection for dependencies.
@@ -24,7 +28,7 @@ GB for the first image build and an internet connection for dependencies.
 ```bash
 git clone https://github.com/DavidBatty95/OccMapAbstractionROS1Pkg.git
 cd OccMapAbstractionROS1Pkg
-bash scripts/demo.sh
+bash occmap demo
 ```
 
 Open **[http://localhost:8080](http://localhost:8080)**. The container builds the
