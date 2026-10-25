@@ -1,0 +1,320 @@
+{
+  "description": "New illustrative runs, not a replay of the original Figure 2 or experimental evidence for its reported aggregate results.",
+  "repository": "https://github.com/DavidBatty95/OccMapAbstractionROS1Pkg",
+  "repository_commit": "df56e915864774a4069410e0bcf4d1ca8582902e",
+  "map": "src/exploration_pkg/maps/reactor_room_sim",
+  "map_sha256": "b8a4691f8cbb6f5b024b83201bb8f9295af80cb7524f719b93e09e4a8cf17ff1",
+  "script_sha256": "1ba32bfdef3377506a82aa0fd1a8c45f54dc11eb2c8245ee4dd8175b61405553",
+  "resolution_m": 0.1,
+  "origin": [
+    -10.0,
+    -10.0,
+    0.0
+  ],
+  "field_model": "I(x,y)=sum_i K_i/(distance_to_source_i_squared+1); no attenuation; synthetic relative units",
+  "hazard_definition": "I >= 0.35 relative units; illustrative threshold, not a physical safety limit. Eight-connected flood fill checks start-goal connectivity after excluding hazard cells.",
+  "graph": {
+    "requested_candidate_stride_m": 0.25,
+    "effective_candidate_stride_m": 0.2,
+    "minimum_separation_m": 0.8,
+    "connection_radius_m": 3.0,
+    "aware_score": "clearance_m - 2 * intensity",
+    "path_objective": "length_m + 18 * integral(I ds)"
+  },
+  "baseline": "Distance-only search on a geometry-ranked sparse graph (not the paper full-grid baseline)",
+  "scenarios": {
+    "Avoidance": {
+      "sources_xy_strength": [
+        [
+          5.0,
+          1.0,
+          3.0
+        ],
+        [
+          5.0,
+          5.0,
+          3.0
+        ],
+        [
+          7.0,
+          3.0,
+          3.0
+        ]
+      ],
+      "hazard_threshold": 0.35,
+      "below_threshold_start_goal_connected": true,
+      "endpoint_intensities": [
+        0.0941245288044261,
+        0.1661897480840869
+      ],
+      "distance_only": {
+        "length_m": 18.163280141637895,
+        "integrated_relative_intensity_m": 19.2601262989615,
+        "peak_relative_intensity": 3.2447099603215963,
+        "nodes": 389,
+        "edges": 4897,
+        "path_world_xy": [
+          [
+            7.050000000000001,
+            -6.949999999999999
+          ],
+          [
+            6.850000000000001,
+            -5.1499999999999995
+          ],
+          [
+            6.449999999999999,
+            -2.75
+          ],
+          [
+            5.65,
+            -0.14999999999999858
+          ],
+          [
+            5.25,
+            1.6500000000000004
+          ],
+          [
+            4.65,
+            4.050000000000001
+          ],
+          [
+            4.25,
+            6.050000000000001
+          ],
+          [
+            2.450000000000001,
+            7.650000000000002
+          ],
+          [
+            0.05000000000000071,
+            8.05
+          ]
+        ],
+        "collision_checked": true
+      },
+      "radiation_aware": {
+        "length_m": 26.739767242489123,
+        "integrated_relative_intensity_m": 2.2778896417393435,
+        "peak_relative_intensity": 0.1661897480840869,
+        "nodes": 390,
+        "edges": 4840,
+        "path_world_xy": [
+          [
+            7.050000000000001,
+            -6.949999999999999
+          ],
+          [
+            5.25,
+            -7.35
+          ],
+          [
+            3.6500000000000004,
+            -7.75
+          ],
+          [
+            0.8500000000000014,
+            -7.55
+          ],
+          [
+            0.05000000000000071,
+            -7.35
+          ],
+          [
+            -1.9499999999999993,
+            -5.95
+          ],
+          [
+            -3.55,
+            -3.9499999999999993
+          ],
+          [
+            -4.75,
+            -1.549999999999999
+          ],
+          [
+            -5.1499999999999995,
+            1.25
+          ],
+          [
+            -4.1499999999999995,
+            3.450000000000001
+          ],
+          [
+            -3.3499999999999996,
+            6.050000000000001
+          ],
+          [
+            -1.9499999999999993,
+            7.050000000000001
+          ],
+          [
+            -0.9499999999999993,
+            7.650000000000002
+          ],
+          [
+            0.05000000000000071,
+            8.05
+          ]
+        ],
+        "collision_checked": true
+      }
+    },
+    "Mitigation": {
+      "sources_xy_strength": [
+        [
+          5.0,
+          1.0,
+          3.0
+        ],
+        [
+          5.0,
+          5.0,
+          3.0
+        ],
+        [
+          7.0,
+          3.0,
+          3.0
+        ],
+        [
+          -5.0,
+          1.0,
+          3.0
+        ],
+        [
+          -5.0,
+          5.0,
+          3.0
+        ],
+        [
+          -8.0,
+          3.0,
+          3.0
+        ]
+      ],
+      "hazard_threshold": 0.35,
+      "below_threshold_start_goal_connected": false,
+      "endpoint_intensities": [
+        0.12801949823500117,
+        0.3222013323815594
+      ],
+      "distance_only": {
+        "length_m": 18.163280141637895,
+        "integrated_relative_intensity_m": 20.576610859378583,
+        "peak_relative_intensity": 3.313094151140449,
+        "nodes": 389,
+        "edges": 4897,
+        "path_world_xy": [
+          [
+            7.050000000000001,
+            -6.949999999999999
+          ],
+          [
+            6.850000000000001,
+            -5.1499999999999995
+          ],
+          [
+            6.449999999999999,
+            -2.75
+          ],
+          [
+            5.65,
+            -0.14999999999999858
+          ],
+          [
+            5.25,
+            1.6500000000000004
+          ],
+          [
+            4.65,
+            4.050000000000001
+          ],
+          [
+            4.25,
+            6.050000000000001
+          ],
+          [
+            2.450000000000001,
+            7.650000000000002
+          ],
+          [
+            0.05000000000000071,
+            8.05
+          ]
+        ],
+        "collision_checked": true
+      },
+      "radiation_aware": {
+        "length_m": 25.93997690720689,
+        "integrated_relative_intensity_m": 10.654073062833753,
+        "peak_relative_intensity": 0.9425149866591894,
+        "nodes": 396,
+        "edges": 4979,
+        "path_world_xy": [
+          [
+            7.050000000000001,
+            -6.949999999999999
+          ],
+          [
+            5.25,
+            -7.35
+          ],
+          [
+            3.6500000000000004,
+            -7.75
+          ],
+          [
+            0.8500000000000014,
+            -7.55
+          ],
+          [
+            0.05000000000000071,
+            -7.35
+          ],
+          [
+            -0.5499999999999989,
+            -6.35
+          ],
+          [
+            -1.549999999999999,
+            -4.1499999999999995
+          ],
+          [
+            -2.1499999999999995,
+            -1.75
+          ],
+          [
+            -2.75,
+            -0.34999999999999964
+          ],
+          [
+            -2.9499999999999993,
+            1.6500000000000004
+          ],
+          [
+            -2.9499999999999993,
+            2.8500000000000014
+          ],
+          [
+            -2.75,
+            5.65
+          ],
+          [
+            -2.9499999999999993,
+            7.850000000000001
+          ],
+          [
+            -2.1499999999999995,
+            7.850000000000001
+          ],
+          [
+            0.05000000000000071,
+            8.05
+          ]
+        ],
+        "collision_checked": true
+      }
+    }
+  }
+}
